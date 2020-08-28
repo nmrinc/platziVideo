@@ -2,7 +2,7 @@
   "author": "Nmr Inc. <nmr.inc@icloud.com>",
   "name": "platzivideo",
   "version": "1.0.0",
-  "description": "Video player project for Platzi's React JS practical course",
+  "description": "Video player project for Platzi's Javascript School",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
