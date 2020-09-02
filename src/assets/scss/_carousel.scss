@@ -1,0 +1,135 @@
+/*-------- Carousel --------*/
+.carousel {
+  width: 100%;
+  height: auto;
+  padding: 0 1em 0 1em;
+  margin: 0 0 4em 0;
+
+  h2 {
+    color: $light;
+    font-weight: $font-weight-bold;
+    left: 0;
+  }
+
+  hr {
+    border: 1px solid rgba($accent, 30%);
+    width: 100%;
+    left: 0;
+  }
+
+  .carousel__container {
+    width: 100%;
+    height: auto;
+    padding-bottom: 1em;
+    white-space: nowrap;
+    @include basic-transition($length: 500ms);
+
+    overflow-y: hidden;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:hover {
+      padding: 4em 2em 4em 2em;
+    }
+
+    &:hover .carousel-item {
+      opacity: 30%;
+    }
+
+    &:hover .carousel-item:hover {
+      transform: scale(1.5);
+      opacity: 1;
+      border: 1px solid rgba($accent, 1);
+    }
+
+    .carousel-item {
+      position: relative;
+      width: 10em;
+      height: 13em;
+      background-color: rgba($accent, 30%);
+      @include clipBox;
+      border: 1px solid rgba($accent, 0);
+      border-radius: 1em;
+      overflow: hidden;
+      margin-right: 1em;
+      display: inline-block;
+      cursor: pointer;
+      @include basic-transition($length: 500ms);
+      transform-origin: center left;
+
+      &:hover ~ .carousel-item {
+        transform: translate3d(8em, 0, 0);
+      }
+
+      .carousel-item__img {
+        width: 10em;
+        height: 13em;
+        object-fit: cover;
+      }
+
+      .carousel-item__details {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: inline-grid;
+        grid-template-areas:
+          "play plus ."
+          "title title title"
+          "subtitle subtitle subtitle";
+        place-content: end start;
+        background: linear-gradient(
+          to top,
+          rgba($dark, 90%) 0%,
+          rgba($dark, 0%) 70%
+        );
+        font-size: $font-size-sm;
+        opacity: 1;
+        padding: 1em;
+        box-sizing: border-box;
+        @include basic-transition($length: 500ms);
+
+        .playButt {
+          grid-area: play;
+          color: $standOut;
+          margin: 0 $spacer/2 $spacer/2 0;
+          @include basic-transition;
+
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+
+        .plusButt {
+          grid-area: plus;
+          color: $standOut;
+          margin: 0 $spacer/2 $spacer/2 0;
+          @include basic-transition;
+
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+
+        .carousel-item__details--title {
+          grid-area: title;
+          color: $standOut;
+        }
+
+        .carousel-item__details--subtitle {
+          grid-area: subtitle;
+          color: $standOut;
+        }
+      }
+    }
+  }
+}
+
+/*-------- Carousel --------*/

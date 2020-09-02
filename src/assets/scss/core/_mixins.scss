@@ -1,0 +1,40 @@
+@mixin basic-transition($length: 250ms) {
+  @if $length != 0 {
+    -webkit-transition: $length ease-in-out;
+    -moz-transition: $length ease-in-out;
+    -o-transition: $length ease-in-out;
+    transition: $length ease-in-out;
+  }
+}
+
+@mixin flexMe($vertical: flex-start, $horizontal: flex-start) {
+  display: flex;
+
+  @if $vertical != null {
+    align-items: $vertical;
+  }
+
+  @if $horizontal!= null {
+    justify-content: $horizontal;
+  }
+
+  @content;
+}
+
+@mixin clipBox {
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+@mixin dropShadow($depth: 1) {
+  @if $depth != 0 {
+    filter: drop-shadow(nth($s-drop-group,$depth));
+  }
+}
+
+@mixin boxShadow($depth: 1) {
+  @if $depth != 0 {
+    box-shadow: nth($s-box-group,$depth);
+  }
+}
