@@ -1,0 +1,17 @@
+.fixed--top {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+
+.fixed--bottom {
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+}
+
+.img-fluid,
+.video-fluid {
+  max-width: 100%;
+  height: auto;
+}
