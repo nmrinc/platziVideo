@@ -1,14 +1,15 @@
 import React from 'react';
 import Thumbnail from  './../Thumbnail';
 
+
 const Carousel = (props) => {
-  let { category, howMany } = props;
+  let { category, images } = props;
 
   const thumbMaker = () => {
     let thumbs = [];
 
-    for (let i = 0; i<howMany; i++){
-      thumbs.push(<Thumbnail imgURL={`./../../assets/img/jpg/${i}.jpg`} title='Descriptive title' details='2019 16+ 114min' />)
+    for (let i = 0; i<images.length; i++){
+      thumbs.push(<Thumbnail imgURL={images[i]} title='Descriptive title' details='2019 16+ 114min' />)
     }
 
     return(
