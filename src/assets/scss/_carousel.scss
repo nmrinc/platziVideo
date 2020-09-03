@@ -45,6 +45,10 @@
       transform: scale(1.5);
       opacity: 1;
       border: 1px solid rgba($accent, 1);
+      .carousel-item__details{
+        opacity: 1;
+        visibility: visible;
+      }
     }
 
     .carousel-item {
@@ -91,7 +95,8 @@
           rgba($dark, 0%) 70%
         );
         font-size: $font-size-sm;
-        opacity: 1;
+        opacity: 0;
+        visibility: hidden;
         padding: 1em;
         box-sizing: border-box;
         @include basic-transition($length: 500ms);
@@ -121,11 +126,14 @@
         .carousel-item__details--title {
           grid-area: title;
           color: $standOut;
+          font-weight: bolder;
         }
 
         .carousel-item__details--subtitle {
           grid-area: subtitle;
-          color: $standOut;
+          color: $light;
+          font-weight: lighter;
+          font-size: $font-size-xs;
         }
       }
     }

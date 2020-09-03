@@ -27,6 +27,7 @@ $platzi-font-family:            $muli-font-family !default;
 $font-size-base:                1rem !default; // Assumes the browser default, typically `16px`
 $font-size-lg:                  $font-size-base * 1.25 !default;
 $font-size-sm:                  $font-size-base * .875 !default;
+$font-size-xs:                  $font-size-base * .65 !default;
 
 $font-weight-lighter:           lighter !default;
 $font-weight-light:             500 !default;
