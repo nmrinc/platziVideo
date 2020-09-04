@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const useInitialState = (API) => {
   const [props, setprops] = useState([]);
@@ -10,6 +11,10 @@ const useInitialState = (API) => {
       .catch(err => console.error(`There was an error: ${err}`));
   }, []);
   return props;
+}
+
+useInitialState.propTypes = {
+  API: PropTypes.string,
 }
 
 export default useInitialState;

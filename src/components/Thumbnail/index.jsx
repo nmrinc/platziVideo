@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Thumbnail = ({ cover, title, year, contentRating, duration }) => {
 
@@ -15,6 +16,14 @@ const Thumbnail = ({ cover, title, year, contentRating, duration }) => {
       </div>
     </div>
   )
+}
+
+Thumbnail.propTypes = {
+  cover: PropTypes.string,
+  title: PropTypes.string,
+  year: PropTypes.number,
+  contentRating: PropTypes.string,
+  duration: PropTypes.number,
 }
 
 export default Thumbnail;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 const Carousel = ({ category,children }) => {
@@ -12,6 +13,11 @@ const Carousel = ({ category,children }) => {
       </div>
     </section>
   );
+}
+
+Carousel.propTypes = {
+  category: PropTypes.string,
+  children: PropTypes.object,
 }
 
 export default Carousel;
