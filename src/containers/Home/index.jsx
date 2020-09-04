@@ -1,31 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+
 import Header from '../../components/Header';
 import Seeker from '../../components/Seeker';
 import Carousel from '../../components/Carousel';
 import Thumbnail from '../../components/Thumbnail';
 import Footer from '../../components/Footer';
 
+import useInitialState from './../../hooks/useInitialState';
+import useCreateItems from '../../hooks/useCreateItems';
+
 const API = 'http://localhost:3000/initalState';
 
 const Home = () => {
 
-  const [videos, setvideos] = useState([]);
-
-  useEffect(() => {
-    fetch(API)
-      .then(response => response.json())
-      .then(data => setvideos(data))
-      .catch(err => console.error(`There was an error: ${err}`));
-  }, []);
-
-  const itemCreator = (props) => {
-    let items = props.map(item =>
-      <Thumbnail key={item.id} {...item} />
-    );
-
-    return (<>{items}</>);
-  }
-
+  const initialState = useInitialState(API);
   const cats = [ 'My list', 'Trends', 'Platzi originals' ];
 
   return (
@@ -33,12 +21,12 @@ const Home = () => {
       <Header />
       <Seeker />
       {
-        videos && Object.keys(videos).map((category, key) => {
-          if (videos[category].length) {
+        initialState && Object.keys(initialState).map((category, key) => {
+          if (initialState[category].length) {
             return (
               <Carousel key={`${key}_${category}`} category={cats[key]}>
                 {
-                  itemCreator(videos[category])
+                  useCreateItems({props:initialState[category], Comp:Thumbnail })
                 }
               </Carousel>
             )
