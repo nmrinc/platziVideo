@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Seeker from '../../components/Seeker';
 import Carousel from '../../components/Carousel';
+import Thumbnail from '../../components/Thumbnail';
 import Footer from '../../components/Footer';
 
 const API = 'http://localhost:3000/initalState';
@@ -17,30 +18,30 @@ const Home = () => {
       .catch(err => console.error(`There was an error: ${err}`));
   }, []);
 
+  const itemCreator = (props) => {
+    let items = props.map(item =>
+      <Thumbnail key={item.id} {...item} />
+    );
+
+    return (<>{items}</>);
+  }
+
+  const cats = [ 'My list', 'Trends', 'Platzi originals' ];
+
   return (
     <>
       <Header />
       <Seeker />
       {
-        videos && Object.keys(videos).map((item,key) => {
-          if (videos[item].length) {
-            let category = '';
-
-            switch (item) {
-              case 'trends': {
-                category = 'Trends';
-                break;
-              }
-              case 'originals': {
-                category = 'Platzi originals';
-                break;
-              }
-              default: {
-                category = 'My list'
-              }
-            }
-
-            return ( <Carousel key={`${key}_${item}`} category={category} data={videos[item]} /> )
+        videos && Object.keys(videos).map((category, key) => {
+          if (videos[category].length) {
+            return (
+              <Carousel key={`${key}_${category}`} category={cats[key]}>
+                {
+                  itemCreator(videos[category])
+                }
+              </Carousel>
+            )
           }
         })
       }

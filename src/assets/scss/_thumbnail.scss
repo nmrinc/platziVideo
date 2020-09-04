@@ -1,0 +1,82 @@
+.carousel-thumbnail {
+  position: relative;
+  width: 10em;
+  height: 13em;
+  background-color: rgba($accent, 30%);
+  @include clipBox;
+  border: 1px solid rgba($accent, 0);
+  border-radius: 1em;
+  overflow: hidden;
+  margin-right: 1em;
+  display: inline-block;
+  cursor: pointer;
+  @include basic-transition($length: 500ms);
+  transform-origin: center left;
+
+  .carousel-thumbnail__img {
+    width: 10em;
+    height: 13em;
+    object-fit: cover;
+  }
+
+  .carousel-thumbnail__details {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    display: inline-grid;
+    grid-template-areas:
+      "play plus ."
+      "title title title"
+      "subtitle subtitle subtitle";
+    place-content: end start;
+    background: linear-gradient(
+      to top,
+      rgba($dark, 90%) 0%,
+      rgba($dark, 0%) 70%
+    );
+    font-size: $font-size-sm;
+    opacity: 0;
+    visibility: hidden;
+    padding: 1em;
+    box-sizing: border-box;
+    @include basic-transition($length: 500ms);
+
+    .playButt {
+      grid-area: play;
+      color: $standOut;
+      margin: 0 $spacer/2 $spacer/2 0;
+      @include basic-transition;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    .plusButt {
+      grid-area: plus;
+      color: $standOut;
+      margin: 0 $spacer/2 $spacer/2 0;
+      @include basic-transition;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
+    .carousel-thumbnail__details--title {
+      grid-area: title;
+      color: $standOut;
+      font-weight: bolder;
+    }
+
+    .carousel-thumbnail__details--subtitle {
+      grid-area: subtitle;
+      color: $light;
+      font-weight: lighter;
+      font-size: $font-size-xs;
+    }
+  }
+}
