@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header logged={ true } />
       <Seeker />
       {
         initialState && Object.keys(initialState).map((category, key) => {
@@ -33,7 +33,7 @@ const Home = () => {
           }
         })
       }
-      <Footer />
+      <Footer logged={true} />
     </>
   );
 }
