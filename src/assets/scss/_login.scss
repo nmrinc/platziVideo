@@ -7,18 +7,23 @@
   }
 
   .login__container {
-    background-color: rgba($dark, 70%);
+    background-color: rgba($dark, 0.7);
     border: 2px solid $accent;
     border-radius: 3em;
     padding: 3em;
+    margin-bottom: 5%;
     min-height: calc(100vh - 18em);
     min-width: calc(100vh - 33em);
     color: $light;
-    box-shadow: 0px 0px 15px 15px rgba($accent, 30%);
+    box-shadow: 0px 0px 0px 0px rgba($accent, 0);
+    @include basic-transition($length: 500ms);
 
-    @include media("<tablet") {
-      margin-bottom: 5em;
+    @include media(">=tablet") {
+      &:hover {
+        box-shadow: 0px 0px 25px 10px rgba($accent, 0.5);
+      }
     }
+
     @include media("<=414px") {
       background: none;
       border: none;
@@ -55,30 +60,35 @@
       }
 
       .login__container--input-container {
-        align-items: baseline;
+        @include flexMe($vertical: baseline, $horizontal: space-evenly);
         margin: 0 0 1em 0;
 
         i {
           margin-right: 1em;
           color: $accent;
+          flex-grow: 1;
         }
 
         .login__container--input {
+          flex-grow: 2;
           background-color: transparent;
-          border-left: 0px;
-          border-top: 0px;
-          border-right: 0px;
-          border-bottom: 2px solid $accent;
+          border: 0;
+          border-bottom: 2px solid rgba($accent, 0.4);
           padding: 0px 1em;
           outline: none;
           height: 2em;
-          width: auto;
+          width: 100%;
           color: $light;
+          @include basic-transition;
+
+          &:focus {
+            border-bottom: 2px solid rgba($accent, 1);
+          }
         }
       }
 
       .login__container--button {
-        background: rgba($accent, 40%);
+        background: rgba($accent, 0.4);
         border-radius: 2em;
         height: auto;
         width: 100%;
@@ -95,15 +105,15 @@
       }
 
       .login__container--remember-me {
-        @include flexMe($vertical:center, $horizontal:space-between);
+        @include flexMe($vertical: center, $horizontal: space-between);
         color: $light;
         margin-top: 10px;
 
-        label{
-            @include flexMe($vertical:center, $horizontal:flex-start);
-            input {
-                margin-right: .5em;
-            }
+        label {
+          @include flexMe($vertical: center, $horizontal: flex-start);
+          input {
+            margin-right: 0.5em;
+          }
         }
       }
     }
