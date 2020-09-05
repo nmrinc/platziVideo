@@ -17,6 +17,7 @@
     padding: 0 1em;
     margin: 0 auto 0 auto;
     background-color: rgba($accent, .5);
+    box-shadow: 0px 0px 0px 0px rgba($accent, 0);
     border: $accent solid 2px;
     border-radius: 2em;
     color: $light;
@@ -25,8 +26,7 @@
 
     &:focus {
       outline: none;
-      border: rgba($light, 0.8) solid 2px;
-      background-color: rgba($accent, 1);
+      box-shadow: 0px 0px 15px 10px rgba($accent, 0.5);
     }
 
     &::placeholder {
