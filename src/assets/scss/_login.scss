@@ -1,0 +1,122 @@
+.login {
+  @include flexMe($vertical: center, $horizontal: center);
+  min-height: calc(100vh - 30em);
+
+  @include media("<=414px") {
+    padding: 0 1em;
+  }
+
+  .login__container {
+    background-color: rgba($dark, 70%);
+    border: 2px solid $accent;
+    border-radius: 3em;
+    padding: 3em;
+    min-height: calc(100vh - 18em);
+    min-width: calc(100vh - 33em);
+    color: $light;
+    box-shadow: 0px 0px 15px 15px rgba($accent, 30%);
+
+    @include media("<tablet") {
+      margin-bottom: 5em;
+    }
+    @include media("<=414px") {
+      background: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      width: 100%;
+      box-shadow: none;
+    }
+
+    &::placeholder {
+      color: rgba($light, 0.8);
+    }
+
+    a {
+      color: $light;
+      font-size: $font-size-sm;
+      text-decoration: none;
+      @include basic-transition;
+
+      &:hover {
+        color: $accent;
+      }
+    }
+
+    h2 {
+      font-weight: $font-weight-bold;
+    }
+
+    .login__container--form {
+      margin-top: $spacer * 2;
+
+      label {
+        font-size: $font-size-sm;
+      }
+
+      .login__container--input-container {
+        align-items: baseline;
+        margin: 0 0 1em 0;
+
+        i {
+          margin-right: 1em;
+          color: $accent;
+        }
+
+        .login__container--input {
+          background-color: transparent;
+          border-left: 0px;
+          border-top: 0px;
+          border-right: 0px;
+          border-bottom: 2px solid $accent;
+          padding: 0px 1em;
+          outline: none;
+          height: 2em;
+          width: auto;
+          color: $light;
+        }
+      }
+
+      .login__container--button {
+        background: rgba($accent, 40%);
+        border-radius: 2em;
+        height: auto;
+        width: 100%;
+        margin: 10px 0px;
+        padding: 0.5em 1em 0.5em 1em;
+        @include clipBox;
+        color: $light;
+        letter-spacing: 1px;
+        @include basic-transition;
+
+        &:hover {
+          background: $accent;
+        }
+      }
+
+      .login__container--remember-me {
+        @include flexMe($vertical:center, $horizontal:space-between);
+        color: $light;
+        margin-top: 10px;
+
+        label{
+            @include flexMe($vertical:center, $horizontal:flex-start);
+            input {
+                margin-right: .5em;
+            }
+        }
+      }
+    }
+
+    .login__container--social-media {
+      div {
+        margin: 1em 0 1em 0;
+      }
+
+      i {
+        margin-right: 0.5em;
+        color: $accent;
+      }
+    }
+  }
+}

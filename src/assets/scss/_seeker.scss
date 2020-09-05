@@ -1,0 +1,38 @@
+/*-------- Seeker --------*/
+.seeker {
+  height: auto;
+  margin-bottom: 3em;
+
+  .seeker__title {
+    color: $light;
+    font-weight: $font-weight-bold;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  .seeker__input {
+    display: block;
+    height: 2em;
+    width: 70%;
+    padding: 0 1em;
+    margin: 0 auto 0 auto;
+    background-color: rgba($accent, .5);
+    border: $accent solid 2px;
+    border-radius: 2em;
+    color: $light;
+    @include clipBox;
+    @include basic-transition($length: 500ms);
+
+    &:focus {
+      outline: none;
+      border: rgba($light, 0.8) solid 2px;
+      background-color: rgba($accent, 1);
+    }
+
+    &::placeholder {
+      color: rgba($light, 0.5);
+    }
+  }
+}
+
+/*-------- /Seeker --------*/
