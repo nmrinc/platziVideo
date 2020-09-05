@@ -12,7 +12,7 @@
   h1 {
     cursor: default;
     position: absolute;
-    color: rgba($accent, 50%);
+    color: rgba($accent, .5);
     font-weight: $font-weight-bold;
     font-size: 38em;
     margin: 20% 0;
@@ -37,7 +37,7 @@
     color: $light;
     cursor: default;
     padding: 0.3em;
-    background: rgba($dark, 50%);
+    background: rgba($dark, .5);
     border-radius: 0.5em;
 
     @include media("<=414") {

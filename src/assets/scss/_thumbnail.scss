@@ -2,7 +2,7 @@
   position: relative;
   width: 10em;
   height: 13em;
-  background-color: rgba($accent, 30%);
+  background-color: rgba($accent, .3);
   @include clipBox;
   border: 1px solid rgba($accent, 0);
   border-radius: 1em;
@@ -34,8 +34,8 @@
     place-content: end start;
     background: linear-gradient(
       to top,
-      rgba($dark, 90%) 0%,
-      rgba($dark, 0%) 70%
+      rgba($dark, .9) 0%,
+      rgba($dark, 0) 70%
     );
     font-size: $font-size-sm;
     opacity: 0;

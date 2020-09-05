@@ -62,23 +62,23 @@ $image-path:                    "../img" !default;
 // ===========================================================================
 
 // Drop
-$drop-1:                        2px 2px 5px rgba(0,0,0, 30%) !default;
-$drop-2:                        2px 5px 7px rgba(0,0,0, 35%) !default;
-$drop-3:                        2px 8px 9px rgba(0,0,0, 40%) !default;
-$drop-4:                        2px 12px 11px rgba(0,0,0, 45%) !default;
-$drop-5:                        2px 16px 13px rgba(0,0,0, 50%) !default;
-$drop-6:                        2px 27px 15px rgba(0,0,0, 55%) !default;
+$drop-1:                        2px 2px 5px rgba(0,0,0, .3) !default;
+$drop-2:                        2px 5px 7px rgba(0,0,0, .35) !default;
+$drop-3:                        2px 8px 9px rgba(0,0,0, .4) !default;
+$drop-4:                        2px 12px 11px rgba(0,0,0, .45) !default;
+$drop-5:                        2px 16px 13px rgba(0,0,0, .5) !default;
+$drop-6:                        2px 27px 15px rgba(0,0,0, .55) !default;
 
 $s-drop-group: $drop-1, $drop-2, $drop-3, $drop-4, $drop-5, $drop-6;
 
 // Box
 
 // Shadows
-$box-1:                         2px 2px 5px 0 rgba(0, 0, 0, 30%), 2px 2px 10px 0 rgba(0, 0, 0, 30%) !default;
-$box-2:                         2px 5px 11px 0 rgba(0, 0, 0, 35%), 2px 4px 15px 0 rgba(0, 0, 0, 35%) !default;
-$box-3:                         2px 8px 17px 0 rgba(0, 0, 0, 40%), 2px 6px 20px 0 rgba(0, 0, 0, 40%) !default;
-$box-4:                         2px 12px 15px 0 rgba(0, 0, 0, 45%), 2px 17px 50px 0 rgba(0, 0, 0, 45%) !default;
-$box-5:                         2px 16px 28px 0 rgba(0, 0, 0, 50%), 2px 25px 55px 0 rgba(0, 0, 0, 50%) !default;
-$box-6:                         2px 27px 24px 0 rgba(0, 0, 0, 55%), 2px 40px 77px 0 rgba(0, 0, 0, 55%) !default;
+$box-1:                         2px 2px 5px 0 rgba(0, 0, 0, .3), 2px 2px 10px 0 rgba(0, 0, 0, .3) !default;
+$box-2:                         2px 5px 11px 0 rgba(0, 0, 0, .35), 2px 4px 15px 0 rgba(0, 0, 0, .35) !default;
+$box-3:                         2px 8px 17px 0 rgba(0, 0, 0, .4), 2px 6px 20px 0 rgba(0, 0, 0, .4) !default;
+$box-4:                         2px 12px 15px 0 rgba(0, 0, 0, .45), 2px 17px 50px 0 rgba(0, 0, 0, .45) !default;
+$box-5:                         2px 16px 28px 0 rgba(0, 0, 0, .5), 2px 25px 55px 0 rgba(0, 0, 0, .5) !default;
+$box-6:                         2px 27px 24px 0 rgba(0, 0, 0, .55), 2px 40px 77px 0 rgba(0, 0, 0, .55) !default;
 
 $s-box-group: $box-1, $box-2, $box-3, $box-4, $box-5, $box-6;
