@@ -9,6 +9,7 @@
 @import "./core/normalize";
 @import "./core/reset.local";
 @import "./core/include-media";
+@import "./core/functions";
 @import "./core/variables";
 @import "./core/colors";
 @import "./core/typography";
@@ -25,4 +26,4 @@
 //Sections
 @import "./main";
 @import "./login";
-// @import "./404";
+@import "./404";
