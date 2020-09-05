@@ -13,10 +13,10 @@ const Login = () => {
           <h2 className="text-center">Login</h2>
           <form className="login__container--form">
             <div className="login__container--input-container">
-              <i className="fi-xnsuxl-close-envelope-solid"></i> <input type="text" className="login__container--input" placeholder="Correo" />
+              <i className="fi-xnsuxl-close-envelope-solid"></i> <input type="text" className="login__container--input" placeholder="email" />
             </div>
             <div className="login__container--input-container">
-              <i className="fi-nnsuxl-key-alt-solid"></i> <input type="password" className="login__container--input" placeholder="Contraseña" />
+              <i className="fi-nnsuxl-key-alt-solid"></i> <input type="password" className="login__container--input" placeholder="Password" />
             </div>
             <button className="login__container--button">Login</button>
             <div className="login__container--remember-me">
