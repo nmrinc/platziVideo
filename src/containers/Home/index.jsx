@@ -1,10 +1,8 @@
 import React from 'react';
 
-import Header from '../../components/Header';
 import Seeker from '../../components/Seeker';
 import Carousel from '../../components/Carousel';
 import Thumbnail from '../../components/Thumbnail';
-import Footer from '../../components/Footer';
 
 import useInitialState from './../../hooks/useInitialState';
 import useCreateItems from '../../hooks/useCreateItems';
@@ -18,7 +16,6 @@ const Home = () => {
 
   return (
     <>
-      <Header logged={ true } />
       <Seeker />
       {
         initialState && Object.keys(initialState).map((category, key) => {
@@ -33,7 +30,6 @@ const Home = () => {
           }
         })
       }
-      <Footer logged={true} />
     </>
   );
 }

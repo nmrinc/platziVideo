@@ -1,13 +1,9 @@
 import React from 'react';
 
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-
 const Signup = () => {
 
   return (
     <>
-      <Header logged={false} />
       <section className="login">
         <section className="login__container">
           <h2 className="text-center">Sign up</h2>
@@ -27,7 +23,6 @@ const Signup = () => {
           <p class="login__container--login text-center">Already a member? <a href="#">Login</a></p>
         </section>
       </section>
-      <Footer logged={false} />
     </>
   );
 }

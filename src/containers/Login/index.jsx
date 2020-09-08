@@ -1,13 +1,9 @@
 import React from 'react';
 
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-
 const Login = () => {
 
   return (
     <>
-      <Header logged={false} />
       <section className="login">
         <section className="login__container">
           <h2 className="text-center">Login</h2>
@@ -33,7 +29,6 @@ const Login = () => {
           <p className="login__container--register">Don't have an account? <a href="#">Register</a></p>
         </section>
       </section>
-      <Footer logged={false} />
     </>
   );
 }

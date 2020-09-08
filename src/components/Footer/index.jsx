@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Footer = (props) => (
-  <footer className={ `footer ${!props.logged && 'fixed--bottom'}` }>
+const Footer = () => (
+  <footer className={ `footer` }>
     <a href="#">Terms</a>
     <a href="#">Privacy</a>
     <a href="#">Help Centre</a>
