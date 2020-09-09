@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -26,7 +27,7 @@ const Login = () => {
             <div><i className="fi-snsuxl-google-logo"></i> Login with Google</div>
             <div><i className="fi-snsuxl-twitter"></i> Login with Twitter</div>
           </section>
-          <p className="login__container--register">Don't have an account? <a href="#">Register</a></p>
+          <p className="login__container--register">Don't have an account? <Link to="/signup">Register</Link></p>
         </section>
       </section>
     </>
