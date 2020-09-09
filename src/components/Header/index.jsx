@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from './../../assets/img/png/logo-platzi-video-BW2.png';
 
 /* const Header = (props) => (
@@ -8,7 +9,7 @@ import logo from './../../assets/img/png/logo-platzi-video-BW2.png';
         {
             props.logged && ( <div className="header__menu">
                 <div className="header__menu--profile">
-                    <i className="fi-cnsux3-user-circle-solid profile-icon"></i>
+                    <FontAwesomeIcon icon="user-circle" size="3x" className="profile-icon" />
                     <p>Profile</p>
                 </div>
                 <ul>
@@ -27,7 +28,7 @@ const Header = () => (
         </Link>
         <div className="header__menu">
             <div className="header__menu--profile">
-                <i className="fi-cnsux3-user-circle-solid profile-icon"></i>
+                <FontAwesomeIcon icon="user-circle" size="3x" className="profile-icon" />
                 <p>Profile</p>
             </div>
             <ul>

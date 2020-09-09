@@ -6,6 +6,9 @@ import Login from './../containers/Login';
 import Signup from './../containers/Signup';
 import NotFound from './../containers/NotFound';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+library.add( faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle );
 
 const App = () => (
   <BrowserRouter>
