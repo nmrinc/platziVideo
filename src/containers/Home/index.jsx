@@ -1,29 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Seeker from '../../components/Seeker';
 import Carousel from '../../components/Carousel';
 import Thumbnail from '../../components/Thumbnail';
 
-import useInitialState from './../../hooks/useInitialState';
 import useCreateItems from '../../hooks/useCreateItems';
 
-const API = 'http://localhost:3000/initalState';
-
-const Home = () => {
-
-  const initialState = useInitialState(API);
+const Home = ({ categories }) => {
   const cats = [ 'My list', 'Trends', 'Platzi originals' ];
 
   return (
     <>
       <Seeker />
       {
-        initialState && Object.keys(initialState).map((category, key) => {
-          if (initialState[category].length) {
+        Object.keys(categories).map((category, key) => {
+          if (categories[category].length) {
             return (
               <Carousel key={`${key}_${category}`} category={cats[key]}>
                 {
-                  useCreateItems({props:initialState[category], Comp:Thumbnail })
+                  useCreateItems({props:categories[category], Comp:Thumbnail })
                 }
               </Carousel>
             )
@@ -34,4 +30,10 @@ const Home = () => {
   );
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    categories: state.cats,
+  }
+}
+
+export default connect(mapStateToProps, null)(Home);
