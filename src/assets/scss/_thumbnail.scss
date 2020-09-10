@@ -66,6 +66,17 @@
       }
     }
 
+    .minusButt {
+      grid-area: plus;
+      color: $accent;
+      margin: 0 $spacer/2 $spacer/2 0;
+      @include basic-transition;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
     .carousel-thumbnail__details--title {
       grid-area: title;
       color: $standOut;

@@ -1,29 +1,45 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Seeker from '../../components/Seeker';
 import Carousel from '../../components/Carousel';
 import Thumbnail from '../../components/Thumbnail';
 
-import useInitialState from './../../hooks/useInitialState';
 import useCreateItems from '../../hooks/useCreateItems';
+import { setFavourite, removeFavourite } from '../../actions';
 
-const API = 'http://localhost:3000/initalState';
+const Home = (props) => {
+  const categories= {
+    mylist: props.mylist,
+    trends: props.trends,
+    originals: props.originals,
+  };
+  const cats = ['My list', 'Trends', 'Platzi originals'];
 
-const Home = () => {
+  const handleSetFavourite = (used) => {
+    const action = props.setFavourite;
 
-  const initialState = useInitialState(API);
-  const cats = [ 'My list', 'Trends', 'Platzi originals' ];
+    if (categories['mylist'].length){
+      if(categories['mylist'].indexOf(used) === -1) action(used);
+    }else{
+      action(used);
+    }
+  }
+
+  const handleRemoveFavourite = (itemId) => {
+    props.removeFavourite(itemId);
+  }
 
   return (
     <>
       <Seeker />
       {
-        initialState && Object.keys(initialState).map((category, key) => {
-          if (initialState[category].length) {
+        Object.keys(categories).map((category, key) => {
+          if (categories[category].length) {
             return (
               <Carousel key={`${key}_${category}`} category={cats[key]}>
                 {
-                  useCreateItems({props:initialState[category], Comp:Thumbnail })
+                  useCreateItems({ props: categories[category], Comp: Thumbnail, plus: handleSetFavourite, minus: handleRemoveFavourite, belong: category })
                 }
               </Carousel>
             )
@@ -34,4 +50,17 @@ const Home = () => {
   );
 }
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    mylist: state.mylist,
+    trends: state.trends,
+    originals: state.originals,
+  }
+}
+
+const mapDispatchToProps = {
+  setFavourite,
+  removeFavourite,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
