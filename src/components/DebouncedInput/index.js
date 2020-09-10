@@ -9,6 +9,7 @@ function useDebouncedValue(initialVal, delay, callback) {
   // function to be called on every change of input
   const handleInputChange = useCallback(
     event => {
+      const tn = event.target.name;
       // assigning the value to a local variable
       // Or you can make the event persist if you want to pass around the event obj
       const inputVal = event.target.value;
@@ -19,7 +20,7 @@ function useDebouncedValue(initialVal, delay, callback) {
         clearTimeout(timer);
       }
       // setting a new callback to execute
-      const timerId = setTimeout(() => callback(inputVal), delay);
+      const timerId = setTimeout(() => callback(inputVal,tn), delay);
       setTimer(timerId);
 
       // if components unmounts when there is a scheduled callback
@@ -39,14 +40,14 @@ function useDebouncedValue(initialVal, delay, callback) {
   return [val, handleInputChange];
 }
 
-export default function InputComp({ onDebouncedValChange, delay }) {
+export default function InputComp({ onDebouncedValChange, delay, typeO, className, placeholder, name }) {
   const [val, handleInputChange] = useDebouncedValue(
     "",
     delay,
-    onDebouncedValChange
+    onDebouncedValChange,
   );
 
-  return <input type="text" value={val} onChange={handleInputChange} />;
+  return <input type={typeO} value={val} onChange={handleInputChange} className={className} placeholder={placeholder} name={name} />;
 }
 
 
@@ -56,6 +57,7 @@ export default function InputComp({ onDebouncedValChange, delay }) {
       onDebouncedValChange={val => {
         console.log("called with val ", val);
       }}
+      type='password'
       delay={300}
     />
 */}

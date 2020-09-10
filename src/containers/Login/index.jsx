@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { loginRequest } from '../../actions/';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import DebouncedInput from './../../components/DebouncedInput';
 
-const Login = () => {
+const Login = props => {
+
+  const [form, setValues] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleInput = ({val,tn}) => {
+    setValues({
+      ...form,
+      [tn]: val
+    });
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+		e.stopPropagation();
+		e.nativeEvent.stopImmediatePropagation();
+
+    props.loginRequest(form);
+    props.history.push('/');
+  }
 
   return (
     <>
@@ -12,12 +36,32 @@ const Login = () => {
           <h2 className="text-center">Login</h2>
           <form className="login__container--form">
             <div className="login__container--input-container">
-              <FontAwesomeIcon icon="envelope" fixedWidth className="icon" /> <input type="text" className="login__container--input" placeholder="email" />
+              <FontAwesomeIcon icon="envelope" fixedWidth className="icon" />
+              <DebouncedInput
+                onDebouncedValChange={(val,tn) => {
+                  handleInput({val,tn});
+                }}
+                className="login__container--input"
+                placeholder="email"
+                name="email"
+                typeO='text'
+                delay={300}
+              />
             </div>
             <div className="login__container--input-container">
-              <FontAwesomeIcon icon="key" fixedWidth className="icon" /> <input type="password" className="login__container--input" placeholder="Password" />
+              <FontAwesomeIcon icon="key" fixedWidth className="icon" />
+              <DebouncedInput
+                onDebouncedValChange={(val,tn) => {
+                  handleInput({val,tn});
+                }}
+                className="login__container--input"
+                placeholder="Password"
+                name="password"
+                typeO='password'
+                delay={300}
+              />
             </div>
-            <button className="login__container--button">Login</button>
+            <button className="login__container--button" type="submit" onClick={handleSubmit}>Login</button>
             <div className="login__container--remember-me">
               <label>
                 <input type="checkbox" id="logRme" value="rme" /> Remember me
@@ -36,4 +80,8 @@ const Login = () => {
   );
 }
 
-export default Login;
+const mapDispatchToProps =  {
+  loginRequest
+}
+
+export default connect(null, mapDispatchToProps)(Login);

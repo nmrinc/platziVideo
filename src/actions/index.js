@@ -9,3 +9,8 @@ export const removeFavourite = payload => ({
   type: actionTypes.REMOVE_FAVOURITE,
   payload: payload,
 });
+
+export const loginRequest = payload => ({
+  type: actionTypes.LOGIN_REQUEST,
+  payload: payload
+});
