@@ -28,7 +28,7 @@
     width: 100%;
     display: inline-grid;
     grid-template-areas:
-      "play plus minus"
+      "play plus ."
       "title title title"
       "subtitle subtitle subtitle";
     place-content: end start;
@@ -67,7 +67,7 @@
     }
 
     .minusButt {
-      grid-area: minus;
+      grid-area: plus;
       color: $accent;
       margin: 0 $spacer/2 $spacer/2 0;
       @include basic-transition;

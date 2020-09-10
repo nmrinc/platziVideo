@@ -6,9 +6,29 @@ import Carousel from '../../components/Carousel';
 import Thumbnail from '../../components/Thumbnail';
 
 import useCreateItems from '../../hooks/useCreateItems';
+import { setFavourite, removeFavourite } from '../../actions';
 
-const Home = ({ categories }) => {
-  const cats = [ 'My list', 'Trends', 'Platzi originals' ];
+const Home = (props) => {
+  const categories= {
+    mylist: props.mylist,
+    trends: props.trends,
+    originals: props.originals,
+  };
+  const cats = ['My list', 'Trends', 'Platzi originals'];
+
+  const handleSetFavourite = (used) => {
+    const action = props.setFavourite;
+
+    if (categories['mylist'].length){
+      if(categories['mylist'].indexOf(used) === -1) action(used);
+    }else{
+      action(used);
+    }
+  }
+
+  const handleRemoveFavourite = (itemId) => {
+    props.removeFavourite(itemId);
+  }
 
   return (
     <>
@@ -19,7 +39,7 @@ const Home = ({ categories }) => {
             return (
               <Carousel key={`${key}_${category}`} category={cats[key]}>
                 {
-                  useCreateItems({props:categories[category], Comp:Thumbnail })
+                  useCreateItems({ props: categories[category], Comp: Thumbnail, plus: handleSetFavourite, minus: handleRemoveFavourite, belong: category })
                 }
               </Carousel>
             )
@@ -32,8 +52,15 @@ const Home = ({ categories }) => {
 
 const mapStateToProps = (state) => {
   return {
-    categories: state.cats,
+    mylist: state.mylist,
+    trends: state.trends,
+    originals: state.originals,
   }
 }
 
-export default connect(mapStateToProps, null)(Home);
+const mapDispatchToProps = {
+  setFavourite,
+  removeFavourite,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

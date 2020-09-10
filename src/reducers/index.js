@@ -3,13 +3,13 @@ const reducer = (state, action) => {
     case 'SET_FAVOURITE':
       return {
         ...state,
-        cats: { ...state.cats, mylist: [...state.cats.mylist, action.payload] }
+        mylist: [...state.mylist, action.payload]
       }
       break;
     case 'REMOVE_FAVOURITE':
       return {
         ...state,
-        cats: { ...state.cats, mylist: state.cats.mylist.filter(items => items.id !== action.payload) }
+        mylist: state.mylist.filter(items => items.id !== action.payload),
       }
       break;
     default:
