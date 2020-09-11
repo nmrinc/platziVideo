@@ -1,24 +1,33 @@
+import actionTypes from "../actions/actionTypes";
+
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_FAVOURITE':
+    case actionTypes.SET_FAVOURITE:
       return {
         ...state,
         mylist: [...state.mylist, action.payload]
       }
       break;
-    case 'REMOVE_FAVOURITE':
+    case actionTypes.REMOVE_FAVOURITE:
       return {
         ...state,
         mylist: state.mylist.filter(items => items.id !== action.payload),
       }
       break;
-    case 'LOGIN_REQUEST':
+    case actionTypes.LOGIN_REQUEST:
       return {
         ...state,
         user: action.payload,
       }
       break;
-    case 'LOGOUT_REQUEST':
+    case actionTypes.LOGOUT_REQUEST:
+      return {
+        ...state,
+        user: action.payload,
+      }
+      break;
+    case actionTypes.SIGNUP_REQUEST:
       return {
         ...state,
         user: action.payload,
