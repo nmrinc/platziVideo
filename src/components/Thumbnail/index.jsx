@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Thumbnail = ({ props, useMe, killMe, isList }) => {
@@ -10,13 +11,15 @@ const Thumbnail = ({ props, useMe, killMe, isList }) => {
     <div className="carousel-thumbnail">
       <img className="carousel-thumbnail__img" src={cover} alt="" />
       <div className="carousel-thumbnail__details">
-        <button className="playButt"><FontAwesomeIcon icon="play-circle" size="2x" /></button>
+        <Link className="playButt" to={`/player/${id}`}>
+          <FontAwesomeIcon icon="play-circle" size="2x" />
+        </Link>
         {
           isList
             ?
             <button
               className="minusButt"
-              onClick={() => killMe(id)}>
+              onClick={() => killMe(id)}> 
               <FontAwesomeIcon icon="minus-circle" size="2x" />
             </button>
             :
