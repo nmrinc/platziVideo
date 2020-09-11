@@ -8,8 +8,8 @@ import NotFound from './../containers/NotFound';
 import Player from './../containers/Player';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
-library.add( faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle, faMinusCircle );
+import { faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle, faMinusCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
+library.add( faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle, faMinusCircle, faSpinner );
 
 const App = () => (
   <BrowserRouter>

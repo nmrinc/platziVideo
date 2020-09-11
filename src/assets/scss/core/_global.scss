@@ -9,3 +9,13 @@ body {
     background-clip: content-box;
     box-sizing: border-box;
 }
+
+.loading {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 12em);
+    width: 100%;
+    color: rgba($light, .5);
+}
