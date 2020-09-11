@@ -19,3 +19,8 @@ export const logoutRequest = payload => ({
   type: actionTypes.LOGOUT_REQUEST,
   payload: payload
 });
+
+export const signupRequest = payload => ({
+  type: actionTypes.SIGNUP_REQUEST,
+  payload: payload
+});
