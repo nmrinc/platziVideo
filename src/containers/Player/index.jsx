@@ -7,14 +7,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Player = props => {
   const { id } = props.match.params;
-  const hasPlaying = Object.keys(props.playing).length > 0;
+  const [hasPlaying, sethasPlaying] = useState(false);
+  //const hasPlaying = Object.keys(props.playing).length > 0;
 
   const [loading, setloading] = useState(true);
 
   useEffect(() => {
-    props.getVideoSource(id);
-    setloading(false);
-  }, [])
+    let didCancel = false;
+    (async () => {
+      !didCancel && setloading(true)
+      try {
+        await props.getVideoSource(id);
+        !didCancel && sethasPlaying(true);
+      } catch (err) {
+        sethasPlaying(false);
+      } finally {
+        !didCancel && setloading(false);
+      }
+    })();
+    return () => { didCancel = true; }
+  }, []);
 
   // return hasPlaying ?( Another solution is to get a loading state and then load the component
   if (loading) {
@@ -24,7 +36,7 @@ const Player = props => {
   } else {
     return (
       <div className="player">
-        <video controls autoplay="autoplay">
+        <video controls autoPlay="autoPlay">
           <source src={props.playing.source} type="video/mp4" />
         </video>
         <div className="Player-back">
