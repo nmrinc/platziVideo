@@ -24,3 +24,8 @@ export const signupRequest = payload => ({
   type: actionTypes.SIGNUP_REQUEST,
   payload: payload
 });
+
+export const getVideoSource = payload => ({
+  type: actionTypes.GET_VIDEO_SOURCE,
+  payload: payload
+});

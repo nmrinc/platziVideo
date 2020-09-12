@@ -7,6 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'assets/js/bundle.js',
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.js','.jsx']
@@ -45,7 +46,6 @@ module.exports = {
           options: {
             limit: 90000,
             name: 'assets/img/[hash].[ext]',
-            publicPath: '/',
           }
         }
       }
