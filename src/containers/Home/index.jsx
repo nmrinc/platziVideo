@@ -32,7 +32,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Seeker />
+      <Seeker isHome />
       {
         Object.keys(categories).map((category, key) => {
           if (categories[category].length) {

@@ -35,7 +35,6 @@ const Header = props => {
                             <p>Profile</p>
                             </>
                     }
-                    
                 </div>
                 <ul>
                     {

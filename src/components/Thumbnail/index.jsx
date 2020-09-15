@@ -12,7 +12,7 @@ const Thumbnail = ({ props, useMe, killMe, isList }) => {
       <img className="carousel-thumbnail__img" src={cover} alt="" />
       <div className="carousel-thumbnail__details">
         <Link className="playButt" to={`/player/${id}`}>
-          <FontAwesomeIcon icon="play-circle" size="2x" />
+          <FontAwesomeIcon icon="play-circle" size="lg" />
         </Link>
         {
           isList
@@ -20,13 +20,13 @@ const Thumbnail = ({ props, useMe, killMe, isList }) => {
             <button
               className="minusButt"
               onClick={() => killMe(id)}> 
-              <FontAwesomeIcon icon="minus-circle" size="2x" />
+              <FontAwesomeIcon icon="trash-alt" size="lg" />
             </button>
             :
             <button
               className="plusButt"
               onClick={() => useMe(props)}>
-              <FontAwesomeIcon icon="plus-circle" size="2x" />
+              <FontAwesomeIcon icon="plus-circle" size="lg" />
             </button>
         }
         <p className="carousel-thumbnail__details--title">{title}</p>
