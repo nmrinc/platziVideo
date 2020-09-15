@@ -73,7 +73,7 @@ const Login = props => {
             <div><FontAwesomeIcon icon={faGoogle} fixedWidth /> Login with Google</div>
             <div><FontAwesomeIcon icon={faTwitter} fixedWidth /> Login with Twitter</div>
           </section>
-          <p className="login__container--register">Don't have an account? <Link to="/signup">Register</Link></p>
+          <p className="login__container--register">Don't have an account?{' '}<Link to="/signup">Register</Link></p>
         </section>
       </section>
     </>
