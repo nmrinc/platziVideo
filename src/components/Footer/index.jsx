@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Footer = props => {
 
@@ -24,7 +25,7 @@ const Footer = props => {
   props.history.listen((location) => getLocation(location) );
 
   return (
-    <footer className={`footer ${loc ? 'fixed--bottom' : ''}`}>
+    <footer className={`footer ${loc && 'fixed--bottom'}`}>
       <a href="#">Terms</a>
       <a href="#">Privacy</a>
       <a href="#">Help Centre</a>
@@ -32,10 +33,8 @@ const Footer = props => {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  }
+Footer.propTypes = {
+  props: PropTypes.object,
 }
 
-export default withRouter(connect(mapStateToProps, null)(Footer));
+export default withRouter(connect(null, null)(Footer));

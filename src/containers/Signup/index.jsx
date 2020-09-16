@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { signupRequest } from '../../actions';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DebouncedInput from '../../components/DebouncedInput';
 
@@ -85,6 +86,11 @@ const Signup = props => {
 
 const mapDispatchToProps = {
   signupRequest,
+}
+
+Signup.propTypes = {
+  props: PropTypes.object,
+  signupRequest: PropTypes.func,
 }
 
 export default connect(null, mapDispatchToProps)(Signup);

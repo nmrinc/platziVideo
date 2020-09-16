@@ -73,9 +73,7 @@ const mapDispatchToProps = {
 
 Header.propTypes = {
     user: PropTypes.object,
-    hasUser: PropTypes.bool,
     logoutRequest: PropTypes.func,
-    handleLogout: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

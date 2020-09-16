@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Seeker from '../../components/Seeker';
 import Carousel from '../../components/Carousel';
@@ -61,6 +62,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setFavourite,
   removeFavourite,
+}
+
+Home.propTypes = {
+  props: PropTypes.object,
+  setFavourite: PropTypes.func,
+  removeFavourite: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -39,12 +39,7 @@ const Thumbnail = ({ props, useMe, killMe, isList }) => {
 }
 
 Thumbnail.propTypes = {
-  cover: PropTypes.string,
-  title: PropTypes.string,
-  year: PropTypes.number,
-  contentRating: PropTypes.string,
-  duration: PropTypes.number,
-  id: PropTypes.number,
+  props: PropTypes.object,
   useMe: PropTypes.func,
   killMe: PropTypes.func,
   isList: PropTypes.bool,

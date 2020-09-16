@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 //import { Redirect } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getVideoSource } from '../../actions';
+import PropTypes from 'prop-types';
 import NotFound from '../NotFound';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Player = props => {
-  const { id } = props.match.params;
+  const { id } = useParams();
   const [hasPlaying, sethasPlaying] = useState(false);
   //const hasPlaying = Object.keys(props.playing).length > 0;
 
@@ -59,6 +61,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   getVideoSource,
+}
+
+Player.propTypes = {
+  props: PropTypes.object,
+  getVideoSource: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
