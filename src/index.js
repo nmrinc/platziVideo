@@ -9,6 +9,7 @@ import './assets/scss/Platzi.scss';
 const initialState = {
   "user": {},
   "playing": {},
+  "findings": [],
   "mylist": [],
   "trends": [
     {
