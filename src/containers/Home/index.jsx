@@ -7,33 +7,37 @@ import Carousel from '../../components/Carousel';
 import Thumbnail from '../../components/Thumbnail';
 
 import useCreateItems from '../../hooks/useCreateItems';
-import { setFavourite, removeFavourite } from '../../actions';
+import { setFavourite, removeFavourite, searchVideo } from '../../actions';
 
 const Home = (props) => {
-  const categories= {
+  const categories = {
+    findings: props.findings,
     mylist: props.mylist,
     trends: props.trends,
     originals: props.originals,
   };
-  const cats = ['My list', 'Trends', 'Platzi originals'];
+  const cats = ['Finders Keepers','My list', 'Trends', 'Platzi originals'];
 
   const handleSetFavourite = (used) => {
     const action = props.setFavourite;
 
-    if (categories['mylist'].length){
-      if(categories['mylist'].indexOf(used) === -1) action(used);
-    }else{
+    if (categories['mylist'].length) {
+      if (categories['mylist'].indexOf(used) === -1) action(used);
+    } else {
       action(used);
     }
   }
 
-  const handleRemoveFavourite = (itemId) => {
-    props.removeFavourite(itemId);
-  }
+  const handleRemoveFavourite = (itemId) => props.removeFavourite(itemId);
+
+  const handleSearch = async (payload) => await props.searchVideo(payload);
 
   return (
     <>
-      <Seeker isHome />
+      <section className="seeker">
+        <h2 className="seeker__title">What would you want to see today?</h2>
+        <Seeker isHome searchAction={handleSearch} />
+      </section>
       {
         Object.keys(categories).map((category, key) => {
           if (categories[category].length) {
@@ -53,6 +57,7 @@ const Home = (props) => {
 
 const mapStateToProps = (state) => {
   return {
+    findings: state.findings,
     mylist: state.mylist,
     trends: state.trends,
     originals: state.originals,
@@ -62,12 +67,14 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   setFavourite,
   removeFavourite,
+  searchVideo,
 }
 
 Home.propTypes = {
   props: PropTypes.object,
   setFavourite: PropTypes.func,
   removeFavourite: PropTypes.func,
+  searchVideo: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

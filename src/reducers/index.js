@@ -37,10 +37,22 @@ const reducer = (state, action) => {
       return {
         ...state,
         playing: state.trends.find(item => item.id === Number(action.payload))
-        || state.originals.find(item => item.id === Number(action.payload))
-        || []
+          || state.originals.find(item => item.id === Number(action.payload))
+          || []
       }
       break;
+    case actionTypes.SEARCH_VIDEO:
+      if (action.payload) {
+        return {
+          ...state,
+          findings: [...state.trends, ...state.originals].filter(item => item.title.toLowerCase().includes(action.payload.toLowerCase()))
+        }
+      } else {
+        return {
+          ...state,
+          findings: [],
+        }
+      }
     default:
       return state;
       break;

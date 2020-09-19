@@ -10,7 +10,13 @@
     margin-bottom: 1em;
   }
 
+  .seeker__input-container{
+    @include flexMe($vertical: center, $horizontal:center);
+    margin: 0 auto 0 auto;
+  }
+
   .seeker__input {
+    flex-grow: 1;
     display: block;
     height: 2em;
     padding: 0 1em;
@@ -18,7 +24,7 @@
     background-color: rgba($accent, 0.5);
     box-shadow: 0px 0px 0px 0px rgba($accent, 0);
     border: $accent solid 2px;
-    border-radius: 2em;
+    border-radius: 2em 0 0 2em;
     color: $light;
     @include clipBox;
     @include basic-transition($length: 500ms);
@@ -30,6 +36,47 @@
 
     &::placeholder {
       color: rgba($light, 0.5);
+    }
+  }
+
+  .seeker__search-butt {
+    @include flexMe($vertical: center, $horizontal:center){
+      flex-shrink: 1;
+    };
+    height: 2em;
+    margin-left: .2em;
+    padding: 0 1em 0 1em;
+    background-color: rgba($accent, 0.5);
+    color: $light;
+    box-shadow: 0px 0px 0px 0px rgba($accent, 0);
+    border: $accent solid 2px;
+    border-radius: 0 2em 2em 0;
+    @include basic-transition($length: 500ms);
+    @include clipBox;
+
+    &:hover {
+      outline: none;
+      box-shadow: 0px 0px 15px 10px rgba($accent, 0.5);
+    }
+  }
+
+  .seeker__clean-butt {
+    @include flexMe($vertical: center, $horizontal:center){
+      flex-shrink: 1;
+    };
+    height: 2em;
+    margin-left: .2em;
+    padding: 0 .5em 0 .5em;
+    background-color: rgba($accent, 0.5);
+    color: $light;
+    box-shadow: 0px 0px 0px 0px rgba($accent, 0);
+    border: $accent solid 2px;
+    @include basic-transition($length: 500ms);
+    @include clipBox;
+
+    &:hover {
+      outline: none;
+      box-shadow: 0px 0px 15px 10px rgba($accent, 0.5);
     }
   }
 }
