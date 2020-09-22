@@ -9,12 +9,15 @@ import Thumbnail from '../../components/Thumbnail';
 import useCreateItems from '../../hooks/useCreateItems';
 import { setFavourite, removeFavourite, searchVideo } from '../../actions';
 
-const Home = (props) => {
+const Home = props => {
+
+  const { findings, mylist, trends, originals } = props.data;
+
   const categories = {
-    findings: props.findings,
-    mylist: props.mylist,
-    trends: props.trends,
-    originals: props.originals,
+    findings: findings,
+    mylist: mylist,
+    trends: trends,
+    originals: originals,
   };
   const cats = ['Finders Keepers','My list', 'Trends', 'Platzi originals'];
 
@@ -28,14 +31,14 @@ const Home = (props) => {
     }
   }
 
-  const handleRemoveFavourite = (itemId) => props.removeFavourite(itemId);
+  const handleRemoveFavourite = (payload) => props.removeFavourite(payload);
 
   const handleSearch = async (payload) => await props.searchVideo(payload);
 
   return (
     <>
       <section className="seeker">
-        <h2 className="seeker__title">What would you want to see today?</h2>
+        <h2 className="seeker__title">What would you like to see today?</h2>
         <Seeker isHome searchAction={handleSearch} />
       </section>
       {
@@ -55,12 +58,9 @@ const Home = (props) => {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    findings: state.findings,
-    mylist: state.mylist,
-    trends: state.trends,
-    originals: state.originals,
+    data: state.data.data,
   }
 }
 

@@ -44,7 +44,7 @@ const Player = props => {
         <div className="Player-back">
           <button type="button" onClick={() => props.history.goBack()}>
             Home
-        </button>
+          </button>
         </div>
       </div>
     );
@@ -55,7 +55,7 @@ const Player = props => {
 
 const mapStateToProps = state => {
   return {
-    playing: state.playing,
+    playing: state.data.data.playing,
   }
 }
 
