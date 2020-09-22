@@ -8,12 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from './../../assets/img/png/logo-platzi-video-BW2.png';
 
 const Header = props => {
-    const { user } = props;
+
+    const { user, logoutRequest } = props;
+
     const hasUser = Object.keys(user).length > 0;
 
-    const handleLogout = () => {
-        props.logoutRequest({});
-    }
+    /* const handleLogout = () => {
+        logoutRequest({});
+    } */
 
     return (
         <header className="header">
@@ -48,7 +50,7 @@ const Header = props => {
                     {
                         hasUser
                             ?
-                            <li><a href="#logout" onClick={handleLogout}>Logout</a></li>
+                            <li><a href="#logout" onClick={() => props.logoutRequest()}>Logout</a></li>
                             :
                             <li>
                                 <Link to="/login">Login</Link>
@@ -61,19 +63,13 @@ const Header = props => {
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        user: state.user
-    }
-}
-
 const mapDispatchToProps = {
     logoutRequest
 }
 
 Header.propTypes = {
-    user: PropTypes.object,
+    props: PropTypes.object,
     logoutRequest: PropTypes.func,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);

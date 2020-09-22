@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getVideoSource } from '../../actions';
 import PropTypes from 'prop-types';
 import NotFound from '../NotFound';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Loader from '../../components/Loader';
 
 const Player = props => {
   const { id } = useParams();
@@ -32,7 +32,7 @@ const Player = props => {
 
   // return hasPlaying ?( Another solution is to get a loading state and then load the component
   if (loading) {
-    return <div className="loading"><FontAwesomeIcon icon="spinner" spin size="6x" /></div>
+    return <Loader />
   } else if (!hasPlaying) {
     return <NotFound />
   } else {
@@ -44,7 +44,7 @@ const Player = props => {
         <div className="Player-back">
           <button type="button" onClick={() => props.history.goBack()}>
             Home
-        </button>
+          </button>
         </div>
       </div>
     );
@@ -55,7 +55,7 @@ const Player = props => {
 
 const mapStateToProps = state => {
   return {
-    playing: state.playing,
+    playing: state.data.data.playing,
   }
 }
 
