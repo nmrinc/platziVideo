@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { getData } from '../../actions/data';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import Loader from '../../components/Loader';
 
 const Layout = props => {
 
@@ -27,7 +28,7 @@ const Layout = props => {
     props.children,
     (child, i) => {
       return data && React.cloneElement(child, {
-        data:data,
+        data: data,
         index: i,
       });
     }
@@ -38,7 +39,7 @@ const Layout = props => {
       {
         isLoading
           ?
-          <h1>Loading...</h1>
+          <Loader />
           :
           data && (
             <>
