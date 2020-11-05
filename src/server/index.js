@@ -4,8 +4,8 @@ require('@babel/register')({
   //@o Pass the same configuration as the babelrc file
   presets: [
     '@babel/preset-env',
-    '@babel/preset-react'
-  ]
+    '@babel/preset-react',
+  ],
 });
 
 //@o Require the server file where will be all the logic of the server

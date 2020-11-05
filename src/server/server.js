@@ -1,6 +1,9 @@
-//@o Import express & dotenv dependency
+/* eslint-disable global-require */
+//@o Import express, dotenv & webpack dependency
 import express from 'express';
 import dotenv from 'dotenv';
+import webpack from 'webpack';
+import helmet from 'helmet';
 
 //@o Execute the config() action so dotenv seek for any .env file
 dotenv.config();
@@ -10,12 +13,33 @@ const { ENV, PORT } = process.env;
 
 //@o Create the app server
 const app = express();
+app.use(helmet.hidePoweredBy());
 
 //@o Create a get call indicating the route. In this case with * will expect all the necessary routes.
 
-if(ENV === 'dev'){
+if (ENV === 'dev') {
   console.log('====================================');
-  console.log(`Dev environment`);
+  console.log('Dev environment');
+
+  //@o Require the webpackConfig file.
+  const webpackConfig = require('../../webpack.config');
+  //@o Require the webpack-dev-middleware
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  //@o Require the webpack-hot-middleware
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  //@o Define a compiler const and pass the webpack dependency with the webpack Config file.
+  const compiler = webpack(webpackConfig);
+  //@o Define a const for the webpack serverConfig with the properties from webpackDevMiddleware.
+  //@o As we're going to use hot module replacement pass it as true.
+  //@context Webpack HotModuleReplacementPlugin let, when we're on dev env, reload the app every time there's a change on the code.
+  //const serverConfig = { port: PORT, hot: true };
+
+  //@o Define and use the webpackDevMiddleware to the app
+  //! With webpack 5 configuration this way will throw an error 'cause the options schema doesn't have a port or hot into.
+  //app.use(webpackDevMiddleware(compiler, serverConfig));
+  app.use(webpackDevMiddleware(compiler));
+  //@o Define and use the webpackHotMiddleware to the app
+  app.use(webpackHotMiddleware(compiler));
 }
 
 app.get('*', (req, res) => {
@@ -24,10 +48,11 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, (err) => {
-  if (err) { console.error(err); }
-  else {
+  if (err) {
+    console.error(err);
+  } else {
     console.log('');
-    console.log('Server running on http://localhost:3000');
+    console.log(`Server running on port: ${PORT}`);
     console.log('====================================');
   }
 });
