@@ -11,6 +11,9 @@ dotenv.config();
 //@o Create the constants for the env variables
 const { ENV, PORT } = process.env;
 
+//@o Require the webpackConfig file.
+const webpackConfig = require('../../webpack.config');
+
 //@o Create the app server
 const app = express();
 app.use(helmet.hidePoweredBy());
@@ -21,8 +24,6 @@ if (ENV === 'dev') {
   console.log('====================================');
   console.log('Dev environment');
 
-  //@o Require the webpackConfig file.
-  const webpackConfig = require('../../webpack.config');
   //@o Require the webpack-dev-middleware
   const webpackDevMiddleware = require('webpack-dev-middleware');
   //@o Require the webpack-hot-middleware
@@ -32,19 +33,21 @@ if (ENV === 'dev') {
   //@o Define a const for the webpack serverConfig with the properties from webpackDevMiddleware.
   //@o As we're going to use hot module replacement pass it as true.
   //@context Webpack HotModuleReplacementPlugin let, when we're on dev env, reload the app every time there's a change on the code.
+  //! With webpack 5 configuration this way will throw an error 'cause the options schema doesn't have a port or hot into.
   //const serverConfig = { port: PORT, hot: true };
+  const serverConfig = {
+    publicPath: webpackConfig.output.publicPath,
+  };
 
   //@o Define and use the webpackDevMiddleware to the app
-  //! With webpack 5 configuration this way will throw an error 'cause the options schema doesn't have a port or hot into.
-  //app.use(webpackDevMiddleware(compiler, serverConfig));
-  app.use(webpackDevMiddleware(compiler));
+  app.use(webpackDevMiddleware(compiler, serverConfig));
   //@o Define and use the webpackHotMiddleware to the app
   app.use(webpackHotMiddleware(compiler));
 }
 
 app.get('*', (req, res) => {
-  //@o using the response pass the returned data, in this case a json.
-  res.send({ hello: 'express' });
+  //@o using the response pass the path where webpack serve the dist
+  res.sendFile(webpackConfig.path);
 });
 
 app.listen(PORT, (err) => {
@@ -52,7 +55,7 @@ app.listen(PORT, (err) => {
     console.error(err);
   } else {
     console.log('');
-    console.log(`Server running on port: ${PORT}`);
+    console.log(`Dev server listening on port: ${PORT}`);
     console.log('====================================');
   }
 });

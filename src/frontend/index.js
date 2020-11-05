@@ -5,11 +5,22 @@ import App from './routes/App';
 import './assets/scss/Platzi.scss';
 import { ConfigureStore } from './configs/configureStore';
 
+console.clear();
+
 const store = ConfigureStore();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('App')
-);
+const render = () => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('App'),
+  );
+};
+render();
+
+if (module.hot) {
+  module.hot.accept('./routes/App.js', () => {
+    render();
+  });
+}

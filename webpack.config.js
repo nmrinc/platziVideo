@@ -4,12 +4,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: ['./src/frontend/index.js', 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true'],
+  entry: ['react-hot-loader/patch', './src/frontend/index.js', 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true'],
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'assets/js/bundle.js',
+    filename: 'assets/bundle.js',
     publicPath: '/',
+    hotUpdateChunkFilename: '.hot / [id].[fullHash].hot - update.js',
+    hotUpdateMainFilename: '.hot / [fullHash].hot - update.json',
+
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -47,7 +50,7 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 90000,
-            name: 'assets/img/[hash].[ext]',
+            name: 'assets/img/[fullHash].[ext]',
           },
         },
       },
@@ -55,6 +58,9 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    contentBase: path.resolve(__dirname, 'dist'),
+    open: true,
+    port: 3000,
     hot: true,
   },
   plugins: [
@@ -64,7 +70,7 @@ module.exports = {
       filename: './index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: 'assets/css/[hash].css',
+      filename: 'assets/css/[fullHash].css',
     }),
   ],
 };
