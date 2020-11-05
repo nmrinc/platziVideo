@@ -18,7 +18,7 @@ require('./server');
  * @context
  * After creating the script on package
  * @tst
- * "start:dev": "node src/server/index"
+ * "start:dev": "nodemon src/server/index"
  * @o
  * Run it on terminal
  * @tst
