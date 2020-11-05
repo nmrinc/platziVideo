@@ -7,16 +7,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode production",
-    "build:dev": "webpack-dev-server --open --mode development --host 192.168.100.4"
+    "build:dev": "webpack-dev-server --open --mode development --host 192.168.100.4",
+    "start:dev": "node src/server/index"
   },
   "keywords": [
     "Platzi",
     "video player",
     "React JS",
-    "Javascript"
+    "Javascript",
+    "Express"
   ],
   "license": "MIT",
   "dependencies": {
+    "@babel/register": "^7.12.1",
     "@babel/runtime": "^7.12.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
@@ -24,6 +27,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
     "classnames": "^2.2.6",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
     "md5": "^2.3.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
