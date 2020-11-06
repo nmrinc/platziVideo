@@ -8,10 +8,10 @@ module.exports = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'assets/bundle.js',
+    filename: 'assets/[name].[chunkhash].js',
     publicPath: '/',
-    hotUpdateChunkFilename: '.hot / [id].[fullHash].hot - update.js',
-    hotUpdateMainFilename: '.hot / [fullHash].hot - update.json',
+    hotUpdateChunkFilename: '.hot / [id].[fullhash].hot - update.js',
+    hotUpdateMainFilename: '.hot / [fullhash].hot - update.json',
 
   },
   resolve: {
@@ -50,7 +50,7 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 90000,
-            name: 'assets/img/[fullHash].[ext]',
+            name: 'assets/img/[contenthash].[ext]',
           },
         },
       },
@@ -66,11 +66,11 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebPackPlugin({
-      template: './public/index.html',
+      template: path.resolve(__dirname, 'public/index.html'),
       filename: './index.html',
     }),
     new MiniCssExtractPlugin({
-      filename: 'assets/css/[fullHash].css',
+      filename: 'assets/[name].[contenthash].css',
     }),
   ],
 };

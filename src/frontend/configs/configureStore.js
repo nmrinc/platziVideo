@@ -1,9 +1,9 @@
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-import thunk from "redux-thunk";
-import logger from "redux-logger";
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import dataReducer from '../reducers/dataReducer';
 
-export const ConfigureStore = () => {
+const ConfigureStore = () => {
 
   const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
@@ -15,3 +15,5 @@ export const ConfigureStore = () => {
   );
   return store;
 };
+
+export default ConfigureStore;

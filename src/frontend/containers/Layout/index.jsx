@@ -6,9 +6,9 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Loader from '../../components/Loader';
 
-const Layout = props => {
+const Layout = (props) => {
 
-  const { isLoading, data } = props.data.data;
+  const { isLoading, data, children } = props;
 
   useEffect(() => {
     let didCancel = false;
@@ -21,26 +21,24 @@ const Layout = props => {
         !didCancel && console.log('====================================');
       }
     })();
-    return () => { didCancel = true; }
+    return () => { didCancel = true; };
   }, []);
 
   const updateChildrenWithProps = React.Children.map(
-    props.children,
+    children,
     (child, i) => {
       return data && React.cloneElement(child, {
-        data: data,
+        data,
         index: i,
       });
-    }
+    },
   );
 
   return (
-    <div className="App" >
+    <div className='App'>
       {
-        isLoading
-          ?
-          <Loader />
-          :
+        isLoading ?
+          <Loader /> :
           data && (
             <>
               <Header user={data.user} />
@@ -51,21 +49,21 @@ const Layout = props => {
       }
     </div>
   );
-}
+};
+
 Layout.propTypes = {
   children: PropTypes.object,
-  props: PropTypes.object,
   getData: PropTypes.func,
-}
+};
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    data: state,
-  }
-}
+    data: state.data.data,
+  };
+};
 
 const mapDispatchToProps = ({
   getData,
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);
