@@ -46,8 +46,22 @@ if (ENV === 'dev') {
 }
 
 app.get('*', (req, res) => {
-  //@o using the response pass the path where webpack serve the dist
-  res.sendFile(webpackConfig.path);
+  //@o using the response pass the html where the app will be served
+  res.send(`
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Platzi Video</title>
+      <link rel="stylesheet" href="assets/app.css" type="text/css" />
+    </head>
+    <body>
+      <div id="App"></div>
+      <script src="assets/app.js" type="text/javascript"></script>
+    </body>
+  </html>
+  `);
 });
 
 app.listen(PORT, (err) => {

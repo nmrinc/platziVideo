@@ -13,6 +13,7 @@ const dataReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: true,
+        data: null,
       };
       break;
     case `${actionTypes.GET_DATA}_REJECTED`:

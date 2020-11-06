@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 
@@ -8,7 +7,7 @@ module.exports = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'assets/[name].[chunkhash].js',
+    filename: 'assets/app.js',
     publicPath: '/',
     hotUpdateChunkFilename: '.hot / [id].[fullhash].hot - update.js',
     hotUpdateMainFilename: '.hot / [fullhash].hot - update.json',
@@ -65,12 +64,8 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebPackPlugin({
-      template: path.resolve(__dirname, 'public/index.html'),
-      filename: './index.html',
-    }),
     new MiniCssExtractPlugin({
-      filename: 'assets/[name].[contenthash].css',
+      filename: 'assets/app.css',
     }),
   ],
 };
