@@ -11,6 +11,13 @@ require('@babel/register')({
   ],
 });
 
+//@concept Require Asset require hook. That lets bind in real time routes that being referenced on the app from node.
+//@o Pass as properties the extensions of the files that will be static hosted. And how will be named.
+require('asset-require-hook')({
+  extensions: ['jpg', 'png', 'svg', 'gif'],
+  name: '/assets/[hash].[ext]',
+});
+
 //@o Require the server file where will be all the logic of the server
 require('./server');
 
