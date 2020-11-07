@@ -20,17 +20,13 @@ const Layout = (props) => {
   );
 
   return (
-    <div className='App'>
-      {
-        data && (
-          <>
-            <Header user={data.user} logOutAction={logoutRequest} />
-            {updateChildrenWithProps}
-            <Footer />
-          </>
-        )
-      }
-    </div>
+    data && (
+      <>
+        <Header user={data.user} logOutAction={logoutRequest} />
+        {updateChildrenWithProps}
+        <Footer />
+      </>
+    )
   );
 };
 

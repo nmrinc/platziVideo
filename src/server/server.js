@@ -58,7 +58,8 @@ if (ENV === 'dev') {
 }
 
 //@o setResponse will receive the html string from renderApp func and will return it into the server html.
-const setResponse = (html) => {
+//@o Additionally we can pass the preloaded State so we can consume it by the client side.
+const setResponse = (html, preloadedState) => {
   return (`
     <!DOCTYPE html>
     <html lang="en">
@@ -70,6 +71,9 @@ const setResponse = (html) => {
       </head>
       <body>
         <div id="App">${html}</div>
+        <script>
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+        </script>
         <script src="assets/app.js" type="text/javascript"></script>
       </body>
     </html>
@@ -80,6 +84,9 @@ const setResponse = (html) => {
 const renderApp = (req, res) => {
   //@o create the store
   const store = createStore(reducer, initialState);
+
+  //@o To pass all the initialState to the frontend, we need to preload it from the server store.
+  const preloadedState = store.getState();
 
   /**
    * @o With renderToString create an html string from the app.
@@ -95,8 +102,8 @@ const renderApp = (req, res) => {
     </Provider>,
   );
 
-  //@o Return the setResponse func as the response from the server passing the html string created
-  res.send(setResponse(html));
+  //@o Return the setResponse func as the response from the server passing the html string created and the preloaded state.
+  res.send(setResponse(html, preloadedState));
 };
 
 //@o Pass the renderApp func as the get callback
