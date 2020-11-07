@@ -5,6 +5,18 @@ import dotenv from 'dotenv';
 import webpack from 'webpack';
 import helmet from 'helmet';
 
+//@concept CONVERT COMPONENTS TO STRING TO CREATE SERVER SIDE RENDERING.
+//@o Import React Dependencies
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { renderRoutes } from 'react-router-config';
+import { StaticRouter } from 'react-router-dom';
+import serverRoutes from '../frontend/routes/serverRoutes';
+import reducer from '../frontend/reducers';
+import initialState from '../frontend/data/initialState';
+
 //@o Execute the config() action so dotenv seek for any .env file
 dotenv.config();
 
@@ -45,24 +57,50 @@ if (ENV === 'dev') {
   app.use(webpackHotMiddleware(compiler));
 }
 
-app.get('*', (req, res) => {
-  //@o using the response pass the html where the app will be served
-  res.send(`
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Platzi Video</title>
-      <link rel="stylesheet" href="assets/app.css" type="text/css" />
-    </head>
-    <body>
-      <div id="App"></div>
-      <script src="assets/app.js" type="text/javascript"></script>
-    </body>
-  </html>
+//@o setResponse will receive the html string from renderApp func and will return it into the server html.
+const setResponse = (html) => {
+  return (`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Platzi Video</title>
+        <link rel="stylesheet" href="assets/app.css" type="text/css" />
+      </head>
+      <body>
+        <div id="App">${html}</div>
+        <script src="assets/app.js" type="text/javascript"></script>
+      </body>
+    </html>
   `);
-});
+};
+
+//@o Create a function that will convert everything to a String and then Render the app
+const renderApp = (req, res) => {
+  //@o create the store
+  const store = createStore(reducer, initialState);
+
+  /**
+   * @o With renderToString create an html string from the app.
+   * @o Define the Provider component and pass the created store.
+   * @o Define the staticRouter and pass the properties location, taken from the req.url and context with an empty object
+   * @o renderRoutes will take the array of routes and render the app.
+  */
+  const html = renderToString(
+    <Provider store={store}>
+      <StaticRouter location={req.url} context={{}}>
+        {renderRoutes(serverRoutes)}
+      </StaticRouter>
+    </Provider>,
+  );
+
+  //@o Return the setResponse func as the response from the server passing the html string created
+  res.send(setResponse(html));
+};
+
+//@o Pass the renderApp func as the get callback
+app.get('*', renderApp);
 
 app.listen(PORT, (err) => {
   if (err) {

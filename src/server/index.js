@@ -1,5 +1,8 @@
 //@context To use the babel capabilities on the server development require babel register
 
+//@o Ask the server to ignore all the css calls as we can't render any of them from the server side
+require('ignore-styles');
+
 require('@babel/register')({
   //@o Pass the same configuration as the babelrc file
   presets: [

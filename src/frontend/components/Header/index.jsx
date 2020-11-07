@@ -1,75 +1,55 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import gravatar from '../../utils/gravatar';
-import { logoutRequest } from '../../actions/';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import logo from './../../assets/img/png/logo-platzi-video-BW2.png';
+import gravatar from '../../utils/gravatar';
+import logo from '../../assets/img/png/logo-platzi-video-BW2.png';
 
-const Header = props => {
+const Header = ({ user, logOutAction }) => {
 
-    const { user, logoutRequest } = props;
+  const hasUser = Object.keys(user).length > 0;
 
-    const hasUser = Object.keys(user).length > 0;
+  return (
+    <header className='header'>
+      <Link to='/'>
+        <img className='header__img' src={logo} alt='Platzi Video' />
+      </Link>
+      <div className='header__menu'>
+        <div className='header__menu--profile'>
+          {
+            hasUser ?
+              (
+                <>
+                  <img src={gravatar(user.email)} alt={user.email} className='gravatar-icon' />
+                  <p>{user.name}</p>
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon='user-circle' size='3x' className='profile-icon' />
+                  <p>Profile</p>
+                </>
+              )
+          }
+        </div>
+        <ul>
+          {
+            hasUser ?
+              <li><a href='#account'>Account</a></li> :
+              null
+          }
 
-    /* const handleLogout = () => {
-        logoutRequest({});
-    } */
+          {
+            hasUser ?
+              <li><a href='#logout' onClick={() => logOutAction()}>Logout</a></li> : (
+                <li>
+                  <Link to='/login'>Login</Link>
+                </li>
+              )
+          }
+        </ul>
+      </div>
+    </header>
+  );
+};
 
-    return (
-        <header className="header">
-            <Link to="/">
-                <img className="header__img" src={logo} alt="Platzi Video" />
-            </Link>
-            <div className="header__menu">
-                <div className="header__menu--profile">
-                    {
-                        hasUser
-                            ?
-                            <>
-                            <img src={gravatar(user.email)} alt={user.email} className="gravatar-icon" />
-                            <p>{user.name}</p>
-                            </>
-                            :
-                            <>
-                            <FontAwesomeIcon icon="user-circle" size="3x" className="profile-icon" />
-                            <p>Profile</p>
-                            </>
-                    }
-                </div>
-                <ul>
-                    {
-                        hasUser
-                            ?
-                            <li><a href="#account">Account</a></li>
-                            :
-                            null
-                    }
-
-                    {
-                        hasUser
-                            ?
-                            <li><a href="#logout" onClick={() => props.logoutRequest()}>Logout</a></li>
-                            :
-                            <li>
-                                <Link to="/login">Login</Link>
-                            </li>
-
-                    }
-                </ul>
-            </div>
-        </header>
-    );
-}
-
-const mapDispatchToProps = {
-    logoutRequest
-}
-
-Header.propTypes = {
-    props: PropTypes.object,
-    logoutRequest: PropTypes.func,
-}
-
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(null, null)(Header);

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-const Footer = props => {
+const Footer = (props) => {
+
+  const { history } = props;
 
   const [loc, setloc] = useState(false);
 
@@ -13,16 +14,15 @@ const Footer = props => {
     } else {
       setloc(false);
     }
-  }
+  };
 
   useEffect(() => {
     let didCancel = false;
     !didCancel && getLocation(props.location);
-    return () => { didCancel = true; }
+    return () => { didCancel = true; };
   }, []);
 
-
-  props.history.listen((location) => getLocation(location) );
+  history.listen((location) => getLocation(location));
 
   return (
     <footer className={`footer ${loc && 'fixed--bottom'}`}>
@@ -31,10 +31,6 @@ const Footer = props => {
       <a href="#">Help Centre</a>
     </footer>
   );
-}
-
-Footer.propTypes = {
-  props: PropTypes.object,
-}
+};
 
 export default withRouter(connect(null, null)(Footer));

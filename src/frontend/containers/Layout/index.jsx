@@ -1,28 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getData } from '../../actions/data';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import Loader from '../../components/Loader';
+import { logoutRequest } from '../../actions';
 
 const Layout = (props) => {
 
-  const { isLoading, data, children } = props;
-
-  useEffect(() => {
-    let didCancel = false;
-    (async () => {
-      try {
-        !didCancel && await props.getData();
-      } catch (err) {
-        !didCancel && console.log('====================================');
-        !didCancel && console.log(`Shit!! ${err.message}`);
-        !didCancel && console.log('====================================');
-      }
-    })();
-    return () => { didCancel = true; };
-  }, []);
+  const { data, children, logoutRequest } = props;
 
   const updateChildrenWithProps = React.Children.map(
     children,
@@ -37,15 +22,13 @@ const Layout = (props) => {
   return (
     <div className='App'>
       {
-        isLoading ?
-          <Loader /> :
-          data && (
-            <>
-              <Header user={data.user} />
-              {updateChildrenWithProps}
-              <Footer />
-            </>
-          )
+        data && (
+          <>
+            <Header user={data.user} logOutAction={logoutRequest} />
+            {updateChildrenWithProps}
+            <Footer />
+          </>
+        )
       }
     </div>
   );
@@ -53,17 +36,17 @@ const Layout = (props) => {
 
 Layout.propTypes = {
   children: PropTypes.object,
-  getData: PropTypes.func,
+  logoutRequest: PropTypes.func,
 };
 
 const mapStateToProps = (state) => {
   return {
-    data: state.data.data,
+    data: state,
   };
 };
 
-const mapDispatchToProps = ({
-  getData,
-});
+const mapDispatchToProps = {
+  logoutRequest,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);
