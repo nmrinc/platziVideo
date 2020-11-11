@@ -28,7 +28,16 @@ const webpackConfig = require('../../webpack.config');
 
 //@o Create the app server
 const app = express();
+
+//@concept Helmet helps you secure your Express apps by setting various HTTP headers.
+app.use(helmet());
+
+//@context Some Helmet middlewares are optional, but it's a good practice to configure them to make the app more secure.
+//@o It's recommended to not disclose technologies used on a website, with x-powered-by HTTP header for example.
 app.use(helmet.hidePoweredBy());
+
+//@o Tells some clients (mostly Adobe products) your domain's policy for loading cross-domain content.
+app.use(helmet.permittedCrossDomainPolicies());
 
 //@o Create a get call indicating the route. In this case with * will expect all the necessary routes.
 
@@ -55,6 +64,9 @@ if (ENV === 'dev') {
   app.use(webpackDevMiddleware(compiler, serverConfig));
   //@o Define and use the webpackHotMiddleware to the app
   app.use(webpackHotMiddleware(compiler));
+} else {
+  //@o With this sentence, declare a public path where the production dist will be served.
+  app.use(express.static(`${__dirname}/public`));
 }
 
 //@o setResponse will receive the html string from renderApp func and will return it into the server html.
