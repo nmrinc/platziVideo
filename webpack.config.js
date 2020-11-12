@@ -1,12 +1,23 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
+//@o Shortcut to config dotenv.
+require('dotenv-flow').config();
+
+//@o With a const validate if the env is dev.
+const isDev = (process.env.ENV === 'development');
+
+//@o Define an entry for production
+let entry = ['./src/frontend/index.js'];
+
+//@o If isDev push the development entry.
+if (isDev) entry = ['react-hot-loader/patch', ...entry, 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true'];
 
 module.exports = {
-  entry: ['react-hot-loader/patch', './src/frontend/index.js', 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload=true'],
-  mode: 'development',
+  entry,
+  mode: process.env.ENV,
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'src/server/public'),
     filename: 'assets/app.js',
     publicPath: '/',
     hotUpdateChunkFilename: '.hot / [id].[fullhash].hot - update.js',
@@ -49,7 +60,8 @@ module.exports = {
           loader: 'url-loader',
           options: {
             limit: 90000,
-            name: 'assets/img/[contenthash].[ext]',
+            name: '[contenthash].[ext]',
+            outputPath: 'assets/img',
           },
         },
       },
@@ -63,7 +75,7 @@ module.exports = {
     hot: true,
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
+    isDev ? new webpack.HotModuleReplacementPlugin() : () => {},
     new MiniCssExtractPlugin({
       filename: 'assets/app.css',
     }),

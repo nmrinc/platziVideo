@@ -9,18 +9,12 @@ import App from './routes/App';
 import './assets/scss/Platzi.scss';
 import ConfigureStore from './configs/configureStore';
 
-console.clear();
-
 const store = ConfigureStore();
 
 //@o Import the createBrowserHistory from history and then define it as a const called history.
 const history = createBrowserHistory();
 
 const render = () => {
-
-  //! One vulnerability of using a preloadedState on the window, it's that any user can access from the browser
-  //@o To avoid this, as now that we are consuming it in the store, we can delete it from the window object.
-  delete window.__PRELOADED_STATE__;
 
   //@bug When hydrating the app, browser get this warning
   //@issue Warning: Expected server HTML to contain a matching <header> in <div>.
@@ -40,6 +34,7 @@ const render = () => {
     </Provider>,
     document.getElementById('App'),
   );
+
 };
 render();
 

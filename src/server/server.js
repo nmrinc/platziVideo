@@ -1,9 +1,9 @@
 /* eslint-disable global-require */
 //@o Import express, dotenv & webpack dependency
 import express from 'express';
-import dotenv from 'dotenv';
 import webpack from 'webpack';
 import helmet from 'helmet';
+import cors from 'cors';
 
 //@concept CONVERT COMPONENTS TO STRING TO CREATE SERVER SIDE RENDERING.
 //@o Import React Dependencies
@@ -16,12 +16,9 @@ import { StaticRouter } from 'react-router-dom';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import reducer from '../frontend/reducers';
 import initialState from '../frontend/data/initialState';
+import config from './config';
 
-//@o Execute the config() action so dotenv seek for any .env file
-dotenv.config();
-
-//@o Create the constants for the env variables
-const { ENV, PORT } = process.env;
+const serialize = require('serialize-javascript');
 
 //@o Require the webpackConfig file.
 const webpackConfig = require('../../webpack.config');
@@ -29,21 +26,11 @@ const webpackConfig = require('../../webpack.config');
 //@o Create the app server
 const app = express();
 
-//@concept Helmet helps you secure your Express apps by setting various HTTP headers.
-app.use(helmet());
-
-//@context Some Helmet middlewares are optional, but it's a good practice to configure them to make the app more secure.
-//@o It's recommended to not disclose technologies used on a website, with x-powered-by HTTP header for example.
-app.use(helmet.hidePoweredBy());
-
-//@o Tells some clients (mostly Adobe products) your domain's policy for loading cross-domain content.
-app.use(helmet.permittedCrossDomainPolicies());
-
 //@o Create a get call indicating the route. In this case with * will expect all the necessary routes.
 
-if (ENV === 'dev') {
+if (config.dev) {
   console.log('====================================');
-  console.log('Dev environment');
+  console.log(`${process.env.ENV} environment`);
 
   //@o Require the webpack-dev-middleware
   const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -65,8 +52,32 @@ if (ENV === 'dev') {
   //@o Define and use the webpackHotMiddleware to the app
   app.use(webpackHotMiddleware(compiler));
 } else {
+  console.log('====================================');
+  console.log(`${process.env.ENV} environment`);
+
+  //@concept Helmet helps you secure your Express apps by setting various HTTP headers.
+  app.use(helmet());
+
+  app.use(cors());
+
+  app.use(helmet.contentSecurityPolicy({
+    directives: {
+      'default-src': ["'self'"],
+      'img-src': ["'self'", 'data:', 'http://dummyimage.com', 'https://gravatar.com'],
+      'media-src': ['*'],
+      'script-src': ["'self'", "'sha256-ZDo5A2/f92QFG9oQoCeOEMiUtJ+sfWvpoTCBMhOOJY4='"],
+      'style-src-elem': ["'self'", 'https://fonts.googleapis.com', "'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E='"],
+      'style-src': ["'self'", 'https://fonts.googleapis.com', "'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E='"],
+      'font-src': ['https://fonts.gstatic.com'],
+      'upgradeInsecureRequests': [],
+    },
+  }));
+
+  //app.use(helmet.hidePoweredBy());
+
   //@o With this sentence, declare a public path where the production dist will be served.
   app.use(express.static(`${__dirname}/public`));
+
 }
 
 //@o setResponse will receive the html string from renderApp func and will return it into the server html.
@@ -83,9 +94,7 @@ const setResponse = (html, preloadedState) => {
       </head>
       <body>
         <div id="App">${html}</div>
-        <script>
-          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
-        </script>
+        <script>window.__PRELOADED_STATE__ = ${serialize(preloadedState)}</script>
         <script src="assets/app.js" type="text/javascript"></script>
       </body>
     </html>
@@ -114,6 +123,8 @@ const renderApp = (req, res) => {
     </Provider>,
   );
 
+  //res.set('Content-Security-Policy', "default-src 'self'; img-src 'self' http://dummyimage.com; script-src 'self' 'sha256-AKfTUP2t87XpfDKC950UztI6WFmf7n355cz+VAt0PkI='; style-src-elem 'self' https://fonts.googleapis.com 'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E='; font-src https://fonts.gstatic.com");
+
   //@o Return the setResponse func as the response from the server passing the html string created and the preloaded state.
   res.send(setResponse(html, preloadedState));
 };
@@ -121,12 +132,12 @@ const renderApp = (req, res) => {
 //@o Pass the renderApp func as the get callback
 app.get('*', renderApp);
 
-app.listen(PORT, (err) => {
+app.listen(config.port, (err) => {
   if (err) {
     console.error(err);
   } else {
     console.log('');
-    console.log(`Dev server listening on port: ${PORT}`);
+    console.log(`Server listening on port: ${config.port}`);
     console.log('====================================');
   }
 });

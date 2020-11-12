@@ -27,6 +27,7 @@ const Thumbnail = ({ props, useMe, killMe, isList }) => {
             <button
               type='button'
               className='plusButt'
+              // eslint-disable-next-line react-hooks/rules-of-hooks
               onClick={() => useMe(props)}
             >
               <FontAwesomeIcon icon='plus-circle' size='lg' />
