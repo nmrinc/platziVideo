@@ -17,6 +17,7 @@ import serverRoutes from '../frontend/routes/serverRoutes';
 import reducer from '../frontend/reducers';
 import initialState from '../frontend/data/initialState';
 import config from './config';
+import getManifest from './getManifest';
 
 const serialize = require('serialize-javascript');
 
@@ -55,6 +56,13 @@ if (config.dev) {
   console.log('====================================');
   console.log(`${process.env.ENV} environment`);
 
+  //@concept middleware to read manifest.json
+  app.use((req, res, next) => {
+    //@o if hashManifest its empty, return the getManifest function to populate it.
+    if (!req.hashManifest) req.hashManifest = getManifest();
+    next();
+  });
+
   //@concept Helmet helps you secure your Express apps by setting various HTTP headers.
   app.use(helmet());
 
@@ -82,7 +90,12 @@ if (config.dev) {
 
 //@o setResponse will receive the html string from renderApp func and will return it into the server html.
 //@o Additionally we can pass the preloaded State so we can consume it by the client side.
-const setResponse = (html, preloadedState) => {
+const setResponse = (html, preloadedState, manifest) => {
+
+  //@o Define constants where if there's a manifest, pass the names it contains so can load if it's in production mode.
+  const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
+  const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+
   return (`
     <!DOCTYPE html>
     <html lang="en">
@@ -90,12 +103,12 @@ const setResponse = (html, preloadedState) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Platzi Video</title>
-        <link rel="stylesheet" href="assets/app.css" type="text/css" />
+        <link rel="stylesheet" href="${mainStyles}" type="text/css" />
       </head>
       <body>
         <div id="App">${html}</div>
         <script>window.__PRELOADED_STATE__ = ${serialize(preloadedState)}</script>
-        <script src="assets/app.js" type="text/javascript"></script>
+        <script src="${mainBuild}" type="text/javascript"></script>
       </body>
     </html>
   `);
@@ -126,7 +139,7 @@ const renderApp = (req, res) => {
   //res.set('Content-Security-Policy', "default-src 'self'; img-src 'self' http://dummyimage.com; script-src 'self' 'sha256-AKfTUP2t87XpfDKC950UztI6WFmf7n355cz+VAt0PkI='; style-src-elem 'self' https://fonts.googleapis.com 'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E='; font-src https://fonts.gstatic.com");
 
   //@o Return the setResponse func as the response from the server passing the html string created and the preloaded state.
-  res.send(setResponse(html, preloadedState));
+  res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
 //@o Pass the renderApp func as the get callback
