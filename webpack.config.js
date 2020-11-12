@@ -1,6 +1,8 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 //@o Shortcut to config dotenv.
 require('dotenv-flow').config();
 
@@ -27,6 +29,10 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
   module: {
     rules: [
       {
@@ -35,14 +41,6 @@ module.exports = {
         use: {
           loader: 'babel-loader',
         },
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
       },
       {
         test: /\.(s*)css$/,
@@ -61,7 +59,7 @@ module.exports = {
           options: {
             limit: 90000,
             name: '[contenthash].[ext]',
-            outputPath: 'assets/img',
+            outputPath: 'assets',
           },
         },
       },
@@ -75,7 +73,12 @@ module.exports = {
     hot: true,
   },
   plugins: [
-    isDev ? new webpack.HotModuleReplacementPlugin() : () => {},
+    isDev ? new webpack.HotModuleReplacementPlugin() : () => { },
+    isDev ? () => { } :
+      new CompressionWebpackPlugin({
+        test: /\.js$|\.css$/,
+        filename: '[path][base].gz',
+      }),
     new MiniCssExtractPlugin({
       filename: 'assets/app.css',
     }),
