@@ -19,13 +19,10 @@ const Seeker = ({ isHome, searchAction }) => {
 
   useEffect(() => {
     let didCancel = false;
-    if (debouncedValue) {
-      !didCancel && searchAction(form);
-    } else {
-      !didCancel && searchAction('');
-    }
+    !didCancel && searchAction(debouncedValue ? form : '');
     return () => { didCancel = true; };
-  }, [debouncedValue]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedValue, form]);
 
   const inputStyles = className('seeker__input-container', {
     isHome,

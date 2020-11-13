@@ -9,7 +9,7 @@ import Loader from '../../components/Loader';
 
 const Player = (props) => {
 
-  const { playing } = props;
+  const { playing, getVideoSource } = props;
 
   const { id } = useParams();
   const [hasPlaying, sethasPlaying] = useState(false);
@@ -22,7 +22,7 @@ const Player = (props) => {
     (async () => {
       !didCancel && setloading(true);
       try {
-        await props.getVideoSource(id);
+        await getVideoSource(id);
         !didCancel && sethasPlaying(true);
       } catch (err) {
         sethasPlaying(false);
@@ -31,7 +31,7 @@ const Player = (props) => {
       }
     })();
     return () => { didCancel = true; };
-  }, []);
+  }, [id, getVideoSource]);
 
   // return hasPlaying ?( Another solution is to get a loading state and then load the component
   if (loading) {

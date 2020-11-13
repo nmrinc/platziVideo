@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback } from 'react';
 
 function useDebouncedValue(initialVal, delay, callback) {
   // state to store value of the input
@@ -8,7 +8,7 @@ function useDebouncedValue(initialVal, delay, callback) {
 
   // function to be called on every change of input
   const handleInputChange = useCallback(
-    event => {
+    (event) => {
       const tn = event.target.name;
       // assigning the value to a local variable
       // Or you can make the event persist if you want to pass around the event obj
@@ -20,7 +20,7 @@ function useDebouncedValue(initialVal, delay, callback) {
         clearTimeout(timer);
       }
       // setting a new callback to execute
-      const timerId = setTimeout(() => callback(inputVal,tn), delay);
+      const timerId = setTimeout(() => callback(inputVal, tn), delay);
       setTimer(timerId);
 
       // if components unmounts when there is a scheduled callback
@@ -31,7 +31,7 @@ function useDebouncedValue(initialVal, delay, callback) {
         }
       };
     },
-    [callback, delay, timer]
+    [callback, delay, timer],
   );
 
   // returning the val and the debounceChange which can be assigned
@@ -42,7 +42,7 @@ function useDebouncedValue(initialVal, delay, callback) {
 
 export default function InputComp({ onDebouncedValChange, delay, typeO, className, placeholder, name }) {
   const [val, handleInputChange] = useDebouncedValue(
-    "",
+    '',
     delay,
     onDebouncedValChange,
   );
@@ -50,8 +50,7 @@ export default function InputComp({ onDebouncedValChange, delay, typeO, classNam
   return <input type={typeO} value={val} onChange={handleInputChange} className={className} placeholder={placeholder} name={name} />;
 }
 
-
-{/*
+{ /*
     /// USE OF DEBOUNCE HOOK
     <DebouncedInput
       onDebouncedValChange={val => {
@@ -60,4 +59,4 @@ export default function InputComp({ onDebouncedValChange, delay, typeO, classNam
       type='password'
       delay={300}
     />
-*/}
+*/ }

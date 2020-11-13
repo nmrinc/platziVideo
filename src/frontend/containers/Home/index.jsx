@@ -11,7 +11,7 @@ import { setFavourite, removeFavourite, searchVideo } from '../../actions';
 
 const Home = (props) => {
 
-  const { data } = props;
+  const { data, searchVideo, removeFavourite } = props;
 
   const { findings, mylist, trends, originals } = data;
 
@@ -33,9 +33,13 @@ const Home = (props) => {
     }
   };
 
-  const handleRemoveFavourite = (payload) => props.removeFavourite(payload);
+  const handleRemoveFavourite = (payload) => removeFavourite(payload);
 
-  const handleSearch = async (payload) => props.searchVideo(payload);
+  const handleSearch = async (payload) => searchVideo(payload);
+
+  const CreateItems = (args) => {
+    return useCreateItems({ props: args.props, Comp: Thumbnail, plus: handleSetFavourite, minus: handleRemoveFavourite, belong: args.belong });
+  };
 
   return (
     <>
@@ -49,7 +53,7 @@ const Home = (props) => {
             return (
               <Carousel key={`${category}`} category={cats[key]}>
                 {
-                  useCreateItems({ props: categories[category], Comp: Thumbnail, plus: handleSetFavourite, minus: handleRemoveFavourite, belong: category })
+                  CreateItems({ props: categories[category], belong: category })
                 }
               </Carousel>
             );

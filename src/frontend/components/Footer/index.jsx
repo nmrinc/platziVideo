@@ -20,15 +20,16 @@ const Footer = (props) => {
     let didCancel = false;
     !didCancel && getLocation(props.location);
     return () => { didCancel = true; };
-  }, []);
+  // eslint-disable-next-line react/destructuring-assignment
+  }, [props.location]);
 
   history.listen((location) => getLocation(location));
 
   return (
     <footer className={`footer ${loc && 'fixed--bottom'}`}>
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
-      <a href="#">Help Centre</a>
+      <button type='button'>Terms</button>
+      <button type='button'>Privbuttoncy</button>
+      <button type='button'>Help Centre</button>
     </footer>
   );
 };

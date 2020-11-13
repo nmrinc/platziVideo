@@ -6,15 +6,15 @@ const useInitialState = (API) => {
 
   useEffect(() => {
     fetch(API)
-      .then(response => response.json())
-      .then(data => setprops(data))
-      .catch(err => console.error(`There was an error: ${err}`));
+      .then((response) => response.json())
+      .then((data) => setprops(data))
+      .catch((err) => console.error(`There was an error: ${err}`));
   }, []);
   return props;
-}
+};
 
 useInitialState.propTypes = {
   API: PropTypes.string,
-}
+};
 
 export default useInitialState;
