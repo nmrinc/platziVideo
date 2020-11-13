@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 //@o Shortcut to config dotenv.
 require('dotenv-flow').config();
 
@@ -33,6 +34,21 @@ module.exports = {
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
+    //@concept Vendor files
+    splitChunks: {
+      chunks: 'async',
+      cacheGroups: {
+        vendors: {
+          name: 'vendors',
+          chunks: 'all',
+          reuseExistingChunk: true,
+          priority: 1,
+          filename: isDev ? 'assets/vendor.js' : 'assets/vendor-[contenthash].js',
+          enforce: true,
+          test: /[\\/]node_modules[\\/]/,
+        },
+      },
+    },
   },
   module: {
     rules: [
@@ -85,5 +101,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: isDev ? 'assets/app.css' : 'assets/app-[contenthash].css',
     }),
+    isDev ? () => { } :
+      new CleanWebpackPlugin({
+        cleanOnceBeforeBuildPatterns: path.resolve(__dirname, 'src/server/public'),
+      }),
   ],
 };

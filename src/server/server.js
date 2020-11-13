@@ -27,8 +27,6 @@ const webpackConfig = require('../../webpack.config');
 //@o Create the app server
 const app = express();
 
-//@o Create a get call indicating the route. In this case with * will expect all the necessary routes.
-
 if (config.dev) {
   console.log('====================================');
   console.log(`${process.env.ENV} environment`);
@@ -81,8 +79,6 @@ if (config.dev) {
     },
   }));
 
-  //app.use(helmet.hidePoweredBy());
-
   //@o With this sentence, declare a public path where the production dist will be served.
   app.use(express.static(`${__dirname}/public`));
 
@@ -95,6 +91,7 @@ const setResponse = (html, preloadedState, manifest) => {
   //@o Define constants where if there's a manifest, pass the names it contains so can load if it's in production mode.
   const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
   const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+  const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
 
   return (`
     <!DOCTYPE html>
@@ -109,6 +106,7 @@ const setResponse = (html, preloadedState, manifest) => {
         <div id="App">${html}</div>
         <script>window.__PRELOADED_STATE__ = ${serialize(preloadedState)}</script>
         <script src="${mainBuild}" type="text/javascript"></script>
+        <script src="${vendorBuild}" type="text/javascript"></script>
       </body>
     </html>
   `);
@@ -142,6 +140,7 @@ const renderApp = (req, res) => {
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
+//@o Create a get call indicating the route. In this case with * will expect all the necessary routes.
 //@o Pass the renderApp func as the get callback
 app.get('*', renderApp);
 
