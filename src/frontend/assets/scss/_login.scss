@@ -1,0 +1,138 @@
+.login {
+  @include flexMe($vertical: center, $horizontal: center);
+  min-height: calc(100vh - 30em);
+
+  @include media("<=414px") {
+    padding: 0 1em;
+  }
+
+  hr {
+    border: 1px solid rgba($light, .2);
+    width: 100%;
+    left: 0;
+  }
+
+  .login__container {
+    background-color: rgba($dark, 0.7);
+    border: 2px solid $accent;
+    border-radius: 3em;
+    padding: 3em;
+    margin-bottom: 5%;
+    min-height: calc(100vh - 18em);
+    min-width: calc(100vh - 33em);
+    color: $light;
+    box-shadow: 0px 0px 0px 0px rgba($accent, 0);
+    @include basic-transition($length: 500ms);
+
+    @include media(">=tablet") {
+      &:hover {
+        box-shadow: 0px 0px 25px 10px rgba($accent, 0.5);
+      }
+    }
+
+    @include media("<=414px") {
+      background: none;
+      border: none;
+      border-radius: 0;
+      padding: 0;
+      width: 100%;
+      box-shadow: none;
+    }
+
+    &::placeholder {
+      color: rgba($light, 0.8);
+    }
+
+    a {
+      color: $light;
+      font-size: $font-size-sm;
+      text-decoration: none;
+      @include basic-transition;
+
+      &:hover {
+        color: $accent;
+      }
+    }
+
+    h2 {
+      font-weight: $font-weight-bold;
+    }
+
+    .login__container--form {
+      margin-top: $spacer * 2;
+
+      label {
+        font-size: $font-size-sm;
+      }
+
+      .login__container--input-container {
+        @include flexMe($vertical: baseline, $horizontal: space-evenly);
+        margin: 0 0 1em 0;
+
+        .icon {
+          margin-right: .5em;
+          color: $accent;
+          flex-grow: 1;
+        }
+
+        .login__container--input {
+          flex-grow: 2;
+          background-color: transparent;
+          border: 0;
+          border-bottom: 2px solid rgba($accent, 0.4);
+          padding: 0px 1em;
+          outline: none;
+          height: 2em;
+          width: 100%;
+          color: $light;
+          @include basic-transition;
+
+          &:focus {
+            border-bottom: 2px solid rgba($accent, 1);
+          }
+        }
+      }
+
+      .login__container--button {
+        background: rgba($accent, 0.4);
+        border-radius: 2em;
+        height: auto;
+        width: 100%;
+        margin: 10px 0px;
+        padding: 0.5em 1em 0.5em 1em;
+        @include clipBox;
+        color: $light;
+        letter-spacing: 1px;
+        @include basic-transition;
+
+        &:hover {
+          background: $accent;
+        }
+      }
+
+      .login__container--remember-me {
+        @include flexMe($vertical: center, $horizontal: space-between);
+        color: $light;
+        margin-top: 10px;
+
+        label {
+          @include flexMe($vertical: center, $horizontal: flex-start);
+          input {
+            margin-right: 0.5em;
+          }
+        }
+      }
+    }
+
+    .login__container--social-media {
+      div {
+        margin: 1em 0 1em 0;
+      }
+
+      i {
+        margin-right: 0.5em;
+        color: $accent;
+      }
+    }
+  }
+}

@@ -1,0 +1,83 @@
+.four0four__bg {
+  height: 100vh;
+  background-image: url("#{$image-path}/jpg/404.jpg");
+  background-color: black;
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-attachment: fixed;
+  background-size: cover;
+  background-clip: content-box;
+  box-sizing: border-box;
+}
+
+.four0four {
+  @include flexMe($vertical: center, $horizontal: center){
+    flex-direction: column;
+  };
+
+  .four0four__pulseContainer {
+    position: relative;
+
+    h1 {
+      cursor: default;
+      color: rgba($accent, 0.4);
+      font-weight: $font-weight-bold;
+      $map: (320:170,414: 205, 920: 250, 1240: 350, 1500: 450); // This maps represent the media size
+      font-size: least-squares-fit($map); // This function calculate the font size to make it responsive
+      filter:blur(2px);
+    }
+  }
+
+  h2 {
+    color: $dark;
+    font-weight: $font-weight-bolder;
+    cursor: default;
+    padding: 0.3em;
+    text-align: center;
+    width: 100%;
+    background: linear-gradient(
+      to left,
+      rgba($light, 0) 0%,
+      rgba($light, .7) 50%,
+      rgba($light, 0) 100%,
+    );
+
+    @include media("<=414") {
+      padding: 0.2em;
+    }
+
+    @include media(">=tablet", "<=desktop") {
+      padding: 0.2em;
+    }
+  }
+}
+
+.pulse {
+  position: absolute;
+  animation-name: pulse;
+  animation-duration: 1500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+
+  &:nth-child(2){
+    animation-delay: 250ms;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+    filter:blur(2px);
+  }
+
+  50% {
+    opacity: .5;
+    filter:blur(10px);
+  }
+
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}

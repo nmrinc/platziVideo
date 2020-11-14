@@ -1,0 +1,26 @@
+.footer {
+  background: linear-gradient(rgba($dark, 0), rgba($dark, 1));
+  height: auto;
+  width: 100%;
+  padding: 2em 1em 1em 1em;
+  margin-top: auto;
+  box-sizing: border-box;
+  button {
+    color: $light;
+    font-size: 0.8em;
+    text-decoration: none;
+    margin-right: 1em;
+    @include basic-transition;
+
+    &:hover {
+      font-weight: $font-weight-bolder;
+      color: $accent;
+    }
+  }
+
+  @include media("<=414px") {
+    @include flexMe($vertical: flex-start, $horizontal: center) {
+      flex-flow: column;
+    }
+  }
+}

@@ -1,0 +1,30 @@
+/*!
+ * Platzi Video
+ * Version: PV 1.0.0
+ */
+
+@charset "UTF-8";
+
+//Core
+@import "./core/normalize";
+@import "./core/reset.local";
+@import "./core/include-media";
+@import "./core/functions";
+@import "./core/variables";
+@import "./core/colors";
+@import "./core/typography";
+@import "./core/mixins";
+@import "./core/helpers";
+@import "./core/global";
+
+//Template
+@import "./header";
+@import "./seeker";
+@import "./carousel";
+@import "./footer";
+
+//Sections
+@import "./main";
+@import "./login";
+@import "./404";
+@import "./player";
