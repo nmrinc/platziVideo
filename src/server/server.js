@@ -170,6 +170,8 @@ const renderApp = (req, res) => {
 //@concept Basic Strategy
 require('./utils/auth/strategies/basic');
 
+const { THIRTY_DAYS_IN_SEC, TWO_HOURS_IN_SEC } = require('./utils/time');
+
 app.post('/auth/sign-in', async (req, res, next) => {
   //@a Obtain the rememberMe attribute from the req body
   const { rememberMe } = req.body;
@@ -180,8 +182,8 @@ app.post('/auth/sign-in', async (req, res, next) => {
       try {
         if (error || !data) { next(boom.unauthorized()); }
 
-        req.login(data, { session: false }, async (error) => {
-          if (error) { next(error); }
+        req.login(data, { session: false }, async (err) => {
+          if (err) { next(err); }
 
           const { token, ...user } = data;
 
