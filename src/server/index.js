@@ -3,6 +3,10 @@
 //@o Ask the server to ignore all the css calls as we can't render any of them from the server side
 require('ignore-styles');
 
+//@a Require @babel/polyfill
+//@o This dependency helps to work with async/await without browser version problems
+require('@babel/polyfill');
+
 require('@babel/register')({
   //@o Pass the same configuration as the babelrc file
   presets: [

@@ -5,6 +5,16 @@ import webpack from 'webpack';
 import helmet from 'helmet';
 import cors from 'cors';
 
+//--##
+
+//@context SSR Auth dependencies
+import cookieParser from 'cookie-parser';
+import boom from '@hapi/boom';
+import passport from 'passport';
+import axios from 'axios';
+
+//--##
+
 //@concept CONVERT COMPONENTS TO STRING TO CREATE SERVER SIDE RENDERING.
 //@o Import React Dependencies
 import React from 'react';
@@ -26,6 +36,19 @@ const webpackConfig = require('../../webpack.config');
 
 //@o Create the app server
 const app = express();
+
+//--##
+
+//@context SSR Auth passport and parsers
+app.use(express.json());
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+
+//@concept Basic Strategy
+require('./utils/auth/strategies/basic');
+
+//--##
 
 if (config.dev) {
   console.log('====================================');
@@ -64,8 +87,6 @@ if (config.dev) {
   //@concept Helmet helps you secure your Express apps by setting various HTTP headers.
   app.use(helmet());
 
-  app.use(cors());
-
   app.use(helmet.contentSecurityPolicy({
     directives: {
       'default-src': ["'self'"],
@@ -78,6 +99,8 @@ if (config.dev) {
       'upgradeInsecureRequests': [],
     },
   }));
+
+  app.use(cors());
 
   //@o With this sentence, declare a public path where the production dist will be served.
   app.use(express.static(`${__dirname}/public`));
@@ -139,6 +162,65 @@ const renderApp = (req, res) => {
   //@o Return the setResponse func as the response from the server passing the html string created and the preloaded state.
   res.send(setResponse(html, preloadedState, req.hashManifest));
 };
+
+//--##
+
+//@context SSR Auth routes
+
+//@concept Basic Strategy
+require('./utils/auth/strategies/basic');
+
+//! eslint doesn't accept function declaration but in a route declaration arrow func crash
+// eslint-disable-next-line prefer-arrow-callback
+app.post('/auth/sign-in', async function (req, res, next) {
+  //@a Obtain the rememberMe attribute from the req body
+  const { rememberMe } = req.body;
+
+  //@a Generate the req with passport and a basic strategy
+  passport.authenticate(
+    'basic', (error, data) => {
+      try {
+        if (error || !data) { next(boom.unauthorized()); }
+
+        req.login(data, { session: false }, async (error) => {
+          if (error) { next(error); }
+
+          const { token, ...user } = data;
+
+          res.cookie('token', token, {
+            httpOnly: !config.dev,
+            secure: !config.dev,
+            maxAge: rememberMe ? THIRTY_DAYS_IN_SEC : TWO_HOURS_IN_SEC,
+          });
+
+          res.status(200).json(user);
+        });
+      } catch (e) {
+        next(e);
+      }
+    },
+  )(req, res, next);
+});
+
+//! eslint doesn't accept function declaration but in a route declaration arrow func crash
+// eslint-disable-next-line prefer-arrow-callback
+app.post('/auth/sign-up', async function (req, res, next) {
+  const { body: user } = req;
+
+  try {
+    await axios({
+      url: `${config.apiUrl}/api/auth/sign-in`,
+      method: 'post',
+      data: user,
+    });
+
+    res.status(201).json({ message: 'user created' });
+  } catch (e) {
+    next(e);
+  }
+});
+
+//--##
 
 //@o Create a get call indicating the route. In this case with * will expect all the necessary routes.
 //@o Pass the renderApp func as the get callback
