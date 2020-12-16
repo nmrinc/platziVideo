@@ -1,3 +1,4 @@
+import axios from 'axios';
 import actionTypes from './actionTypes';
 
 export const setFavourite = (payload) => ({
@@ -34,3 +35,23 @@ export const searchVideo = (payload) => ({
   type: actionTypes.SEARCH_VIDEO,
   payload,
 });
+
+export const setError = (payload) => ({
+  type: actionTypes.SET_ERROR,
+  payload,
+});
+
+//@context Sign up action
+export const registerUser = (payload, redirectUrl) => {
+  //@o We'll return a function that will make an axios post call passing the payload to the api endpoint.
+  return (dispatch) => {
+    axios.post('/auth/sign-up', payload)
+      //@a pass the data to the signup request action created before.
+      .then(({ data }) => dispatch(signupRequest(data)))
+      //@a Set a redirection to the given url.
+      .then(() => {
+        window.location.href = redirectUrl;
+      })
+      .catch((err) => dispatch(setError(err)));
+  };
+};

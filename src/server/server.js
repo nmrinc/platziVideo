@@ -208,13 +208,24 @@ app.post('/auth/sign-up', async function (req, res, next) {
   const { body: user } = req;
 
   try {
-    await axios({
+    //@a declare as a constant the call
+    const userData = await axios({
       url: `${config.apiUrl}/api/auth/sign-in`,
       method: 'post',
-      data: user,
+      data: {
+        //@a pass the object with the info that will be obtained
+        'email': user.email,
+        'name': user.name,
+        'password': user.password,
+      },
     });
 
-    res.status(201).json({ message: 'user created' });
+    //@a As the res status json, pass an object with the info obtained from the req and userData
+    res.status(201).json({
+      name: req.body.name,
+      email: req.body.email,
+      id: userData.data.id,
+    });
   } catch (e) {
     next(e);
   }
