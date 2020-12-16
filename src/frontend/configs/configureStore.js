@@ -1,4 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+//@concept Thunk it's a middleware that let make calls to external api from the actions.
+//@o Thunk adds a sub routine at the beginning or the end of a function. Delaying the execution until the result of this function will be used.
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducer from '../reducers';
