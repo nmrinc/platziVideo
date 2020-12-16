@@ -27,7 +27,7 @@ passport.use(
 
       return cb(null, data);
     } catch (e) {
-      cb(e);
+      return cb(e);
     }
   }),
 );
