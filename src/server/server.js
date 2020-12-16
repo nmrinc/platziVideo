@@ -170,9 +170,7 @@ const renderApp = (req, res) => {
 //@concept Basic Strategy
 require('./utils/auth/strategies/basic');
 
-//! eslint doesn't accept function declaration but in a route declaration arrow func crash
-// eslint-disable-next-line prefer-arrow-callback
-app.post('/auth/sign-in', async function (req, res, next) {
+app.post('/auth/sign-in', async (req, res, next) => {
   //@a Obtain the rememberMe attribute from the req body
   const { rememberMe } = req.body;
 
@@ -202,19 +200,28 @@ app.post('/auth/sign-in', async function (req, res, next) {
   )(req, res, next);
 });
 
-//! eslint doesn't accept function declaration but in a route declaration arrow func crash
-// eslint-disable-next-line prefer-arrow-callback
-app.post('/auth/sign-up', async function (req, res, next) {
+app.post('/auth/sign-up', async (req, res, next) => {
   const { body: user } = req;
 
   try {
-    await axios({
-      url: `${config.apiUrl}/api/auth/sign-in`,
+    //@a declare as a constant the call
+    const userData = await axios({
+      url: `${config.apiUrl}/api/auth/sign-up`,
       method: 'post',
-      data: user,
+      data: {
+        //@a pass the object with the info that will be obtained
+        'email': user.email,
+        'name': user.name,
+        'password': user.password,
+      },
     });
 
-    res.status(201).json({ message: 'user created' });
+    //@a As the res status json, pass an object with the info obtained from the req and userData
+    res.status(201).json({
+      name: req.body.name,
+      email: req.body.email,
+      id: userData.data.id,
+    });
   } catch (e) {
     next(e);
   }
