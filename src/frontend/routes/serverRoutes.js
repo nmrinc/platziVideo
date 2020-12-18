@@ -7,36 +7,35 @@ import Signup from '../containers/Signup';
 import NotFound from '../containers/NotFound';
 import Player from '../containers/Player';
 
-//@o This will be an array of the same routes defined on the app
-const routes = [
-  //@o Define the routes as an object with the same properties as the component of the app routes
+//@a To validate login, create the const serverRoutes and pass the isLogged value. The with a ternary expression show the needed component
+const serverRoutes = (isLogged) => {
+  return [
+    {
+      exact: true,
+      path: '/',
+      component: isLogged ? Home : Login,
+    },
+    {
+      exact: true,
+      path: '/login',
+      component: Login,
+    },
+    {
+      exact: true,
+      path: '/signup',
+      component: Signup,
+    },
+    {
+      exact: true,
+      path: '/player/:id',
+      component: isLogged ? Player : Login,
+    },
+    {
+      //@o In this case will not receive a path, because it's the not found component. So will pass name instead.
+      name: 'NotFound',
+      component: NotFound,
+    },
+  ];
+};
 
-  {
-    exact: true,
-    path: '/',
-    component: Home,
-  },
-  {
-    exact: true,
-    path: '/login',
-    component: Login,
-  },
-  {
-    exact: true,
-    path: '/signup',
-    component: Signup,
-  },
-  {
-    exact: true,
-    path: '/player/:id',
-    component: Player,
-  },
-  {
-    //@o In this case will not receive a path, because it's the not found component. So will pass name instead.
-    name: 'NotFound',
-    component: NotFound,
-  },
-
-];
-
-export default routes;
+export default serverRoutes;

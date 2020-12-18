@@ -11,14 +11,15 @@ import Player from '../containers/Player';
 
 library.add(faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle, faTrashAlt, faSpinner, faSearch, faTimes);
 
-const App = () => (
+//@a As the routes from the layout defina what the user will see. Validate if isLogged return the component, if not redirect to the login
+const App = ({ isLogged }) => (
   <BrowserRouter>
     <Layout>
       <Switch>
-        <Route exact path='/' component={Home} />
+        <Route exact path='/' component={isLogged ? Home : Login} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/signup' component={Signup} />
-        <Route exact path='/player/:id' component={Player} />
+        <Route exact path='/player/:id' component={isLogged ? Player : Login} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

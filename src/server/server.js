@@ -25,7 +25,7 @@ import { renderRoutes } from 'react-router-config';
 import { StaticRouter } from 'react-router-dom';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import reducer from '../frontend/reducers';
-import initialState from '../frontend/data/initialState';
+import initialData from '../frontend/data/initialData';
 import config from './config';
 import getManifest from './getManifest';
 
@@ -137,22 +137,42 @@ const setResponse = (html, preloadedState, manifest) => {
 
 //@o Create a function that will convert everything to a String and then Render the app
 const renderApp = (req, res) => {
+  //@a Declare the initial state variable that will be filled according to the login.
+  let initialState;
+
+  //@a Get the user info from the cookie.
+  const { email, name, id } = req.cookies;
+
+  //@a Validate if the user has an id and populate the initialState.
+  if (id) {
+    initialState = {
+      ...initialData,
+      user: { email, name, id },
+    };
+  } else {
+    initialState = initialData;
+  }
+
   //@o create the store
   const store = createStore(reducer, initialState);
 
   //@o To pass all the initialState to the frontend, we need to preload it from the server store.
   const preloadedState = store.getState();
 
+  //@a Define the isLogged const.
+  const isLogged = (initialState.user.id);
+
   /**
    * @o With renderToString create an html string from the app.
    * @o Define the Provider component and pass the created store.
    * @o Define the staticRouter and pass the properties location, taken from the req.url and context with an empty object
    * @o renderRoutes will take the array of routes and render the app.
+   * @a Pass the isLogged const to the serverRoutes.
   */
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
-        {renderRoutes(serverRoutes)}
+        {renderRoutes(serverRoutes(isLogged))}
       </StaticRouter>
     </Provider>,
   );
