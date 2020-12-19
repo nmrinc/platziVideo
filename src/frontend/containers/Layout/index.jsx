@@ -9,6 +9,16 @@ const Layout = (props) => {
 
   const { data, children, logoutRequest } = props;
 
+  const logOutHandle = () => {
+    document.cookie = 'name=';
+    document.cookie = 'email=';
+    document.cookie = 'id=';
+    document.cookie = 'token=';
+    document.cookie = 'max-age=0';
+    logoutRequest({});
+    window.location.href = '/login';
+  };
+
   const updateChildrenWithProps = React.Children.map(
     children,
     (child, i) => {
@@ -22,7 +32,7 @@ const Layout = (props) => {
   return (
     data && (
       <>
-        <Header user={data.user} logOutAction={logoutRequest} />
+        <Header user={data.user} logOutAction={logOutHandle} />
         {updateChildrenWithProps}
         <Footer />
       </>
