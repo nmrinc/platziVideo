@@ -28,7 +28,7 @@ const Footer = (props) => {
   return (
     <footer className={`footer ${loc && 'fixed--bottom'}`}>
       <button type='button'>Terms</button>
-      <button type='button'>Privbuttoncy</button>
+      <button type='button'>Privacy</button>
       <button type='button'>Help Centre</button>
     </footer>
   );

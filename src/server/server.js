@@ -25,7 +25,6 @@ import { renderRoutes } from 'react-router-config';
 import { StaticRouter } from 'react-router-dom';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import reducer from '../frontend/reducers';
-import initialData from '../frontend/data/initialData';
 import config from './config';
 import getManifest from './getManifest';
 
@@ -136,21 +135,42 @@ const setResponse = (html, preloadedState, manifest) => {
 };
 
 //@o Create a function that will convert everything to a String and then Render the app
-const renderApp = (req, res) => {
+const renderApp = async (req, res) => {
   //@a Declare the initial state variable that will be filled according to the login.
   let initialState;
 
   //@a Get the user info from the cookie.
-  const { email, name, id } = req.cookies;
+  const { email, name, id, token } = req.cookies;
 
-  //@a Validate if the user has an id and populate the initialState.
-  if (id) {
+  //@a Make a try/catch with the consult with axios adding the header with the token.
+  try {
+    let movieList = await axios({
+      url: `${config.apiUrl}/api/movies`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'get',
+    });
+
+    //@a As axios expose the res as a data. We need to declare the route to obtain it.
+    movieList = movieList.data.data;
+
+    //@a build the initial state with the response, filtering the content.
     initialState = {
-      ...initialData,
       user: { email, name, id },
+      playing: {},
+      findings: [],
+      myList: [],
+      trends: movieList.filter((movie) => movie.contentRating === 'PG' && movie._id),
+      originals: movieList.filter((movie) => movie.contentRating === 'G' && movie._id),
     };
-  } else {
-    initialState = initialData;
+  } catch (e) {
+    initialState = {
+      user: {},
+      playing: {},
+      findings: [],
+      myList: [],
+      trends: [],
+      originals: [],
+    };
   }
 
   //@o create the store

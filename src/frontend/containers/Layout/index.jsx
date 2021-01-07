@@ -14,7 +14,6 @@ const Layout = (props) => {
     document.cookie = 'email=';
     document.cookie = 'id=';
     document.cookie = 'token=';
-    document.cookie = 'max-age=0';
     logoutRequest({});
     window.location.href = '/login';
   };
