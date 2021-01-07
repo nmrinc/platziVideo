@@ -11,7 +11,7 @@ import Player from '../containers/Player';
 
 library.add(faUserCircle, faEnvelope, faKey, faUser, faPlayCircle, faPlusCircle, faTrashAlt, faSpinner, faSearch, faTimes);
 
-//@a As the routes from the layout defina what the user will see. Validate if isLogged return the component, if not redirect to the login
+//@a As the routes from the layout define what the user will see. Validate if isLogged return the component, if not redirect to the login
 const App = ({ isLogged }) => (
   <BrowserRouter>
     <Layout>

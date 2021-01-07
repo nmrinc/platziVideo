@@ -13,11 +13,11 @@ const Home = (props) => {
 
   const { data, searchVideo, removeFavourite } = props;
 
-  const { findings, mylist, trends, originals } = data;
+  const { findings, myList, trends, originals } = data;
 
   const categories = {
     findings,
-    mylist,
+    myList,
     trends,
     originals,
   };
@@ -26,8 +26,8 @@ const Home = (props) => {
   const handleSetFavourite = (used) => {
     const action = props.setFavourite;
 
-    if (categories['mylist'].length) {
-      if (categories['mylist'].indexOf(used) === -1) action(used);
+    if (categories['myList'].length) {
+      if (categories['myList'].indexOf(used) === -1) action(used);
     } else {
       action(used);
     }

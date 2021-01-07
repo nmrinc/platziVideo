@@ -6,13 +6,13 @@ const reducer = (state, action) => {
     case actionTypes.SET_FAVOURITE:
       return {
         ...state,
-        mylist: [...state.mylist, action.payload],
+        myList: [...state.myList, action.payload],
       };
       break;
     case actionTypes.REMOVE_FAVOURITE:
       return {
         ...state,
-        mylist: state.mylist.filter((items) => items.id !== action.payload),
+        myList: state.myList.filter((items) => items.id !== action.payload),
       };
       break;
     case actionTypes.LOGIN_REQUEST:
