@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Thumbnail = ({ props, useMe, killMe, isList }) => {
 
-  const { cover, title, year, contentRating, duration, id } = props;
+  const { cover, title, year, contentRating, duration, id, _id, _uId } = props;
 
   return (
     <div className='carousel-thumbnail'>
@@ -19,7 +19,7 @@ const Thumbnail = ({ props, useMe, killMe, isList }) => {
             <button
               type='button'
               className='minusButt'
-              onClick={() => killMe(id)}
+              onClick={() => killMe({ _id, _uId })}
             >
               <FontAwesomeIcon icon='trash-alt' size='lg' />
             </button>
@@ -28,7 +28,7 @@ const Thumbnail = ({ props, useMe, killMe, isList }) => {
               type='button'
               className='plusButt'
               // eslint-disable-next-line react-hooks/rules-of-hooks
-              onClick={() => useMe(props)}
+              onClick={() => useMe(_id)}
             >
               <FontAwesomeIcon icon='plus-circle' size='lg' />
             </button>

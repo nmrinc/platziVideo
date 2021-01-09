@@ -3,16 +3,21 @@ import actionTypes from '../actions/actionTypes';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.SET_FAVOURITE:
+    case actionTypes.SET_FAVOURITE: {
+      const myList = action.payload ?
+        [...state.myList, ...[...state.trends, ...state.originals].filter((item) => item._id === action.payload.movieId)] :
+        [...state.myList];
+      myList[myList.length - 1]._uId = action.payload._uId;
       return {
         ...state,
-        myList: [...state.myList, action.payload],
+        myList,
       };
       break;
+    }
     case actionTypes.REMOVE_FAVOURITE:
       return {
         ...state,
-        myList: state.myList.filter((items) => items.id !== action.payload),
+        myList: state.myList.filter((items) => items._id !== action.payload),
       };
       break;
     case actionTypes.LOGIN_REQUEST:
