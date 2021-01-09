@@ -153,12 +153,31 @@ const renderApp = async (req, res) => {
     //@a As axios expose the res as a data. We need to declare the route to obtain it.
     movieList = movieList.data.data;
 
+    //--## User movies fetch
+    let userMovies = await axios({
+      url: `${config.apiUrl}/api/user-movies/?userId=${id}`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'get',
+    });
+
+    userMovies = userMovies.data.data;
+
+    let myList = [];
+
+    userMovies.forEach((item) => {
+      myList = [...myList, ...movieList.filter((el) => el._id === item.movieId)];
+    });
+
+    for (let i = 0; i < myList.length; i++) myList[i]._uId = userMovies[i]._id;
+
+    //--## /User movies fetch
+
     //@a build the initial state with the response, filtering the content.
     initialState = {
       user: { email, name, id },
       playing: {},
       findings: [],
-      myList: [],
+      myList: myList || [],
       trends: movieList.filter((movie) => movie.contentRating === 'PG' && movie._id),
       originals: movieList.filter((movie) => movie.contentRating === 'G' && movie._id),
     };
@@ -264,6 +283,58 @@ app.post('/auth/sign-up', async (req, res, next) => {
       email: req.body.email,
       id: userData.data.id,
     });
+  } catch (e) {
+    next(e);
+  }
+});
+
+//@context User Movies admin
+
+app.post('/user-movies', async (req, res, next) => {
+
+  try {
+    //@a Obtain userMovie from the request body
+    const { body: userMovie } = req;
+    //@a Obtain the token from the request cookies.
+    const { id, token } = req.cookies;
+
+    const { data, status } = await axios({
+      url: `${config.apiUrl}/api/user-movies`,
+      //@a Add a header of authorization with a bearer token type, passing the token obtained from the cookie.
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'post',
+      data: {
+        'userId': id,
+        ...userMovie,
+      },
+    });
+
+    //@a If the res status it's different to 201, return a bad implementation boom error
+    //@o Commonly return an HTTP 500 code. Meaning that something has gone wrong on the website's server, but the server could not be more specific on what the exact problem is.
+    if (status !== 201) { return next(boom.badImplementation()); }
+
+    res.status(201).json(data);
+  } catch (e) {
+    next(e);
+  }
+});
+
+app.delete('/user-movies/:userMovieId', async (req, res, next) => {
+  try {
+    //@a Obtain userMovieId from the request params
+    const { userMovieId } = req.params;
+    const { token } = req.cookies;
+
+    const { data, status } = await axios({
+      //@a Add the movie id obtained from the params to the url
+      url: `${config.apiUrl}/api/user-movies/${userMovieId}`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'delete',
+    });
+
+    if (status !== 200) { return next(boom.badImplementation()); }
+
+    res.status(200).json(data);
   } catch (e) {
     next(e);
   }

@@ -79,3 +79,26 @@ export const loginUser = ({ email, password }, redirectUrl) => {
       .catch((err) => dispatch(setError(err)));
   };
 };
+
+//@context Set user movie
+export const setUserMovie = (movieId) => (dispatch) => {
+
+  axios.post(
+    '/user-movies',
+    { movieId },
+  )
+    .then((data) => {
+      dispatch(setFavourite({ movieId, _uId: data.data.data }));
+    })
+    .catch((err) => dispatch(setError(err)));
+
+};
+
+//@context Delete user movie
+export const deleteUserMovie = (args) => (dispatch) => {
+
+  axios.delete(`/user-movies/${args._uId}`)
+    .then(dispatch(removeFavourite(args._id)))
+    .catch((err) => dispatch(setError(err)));
+
+};
