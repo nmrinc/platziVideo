@@ -10,6 +10,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 //@a Import Mount from Enzyme so it help mount the component for test.
 import { mount } from 'enzyme';
+//@a Import "create" to generate a snapshot of the component.
+import { create } from 'react-test-renderer';
 //@a Import the component to be tested.
 import Footer from '../../components/Footer';
 //@a The component is connected to a store. So import it and create its constant.
@@ -40,4 +42,28 @@ describe('<Footer />', () => {
     //@o Find the <a></a> tag into the component and test if the length is equal to 3
     expect(footer.find('button')).toHaveLength(3);
   });
+
+  /**
+   * @concept SNAPSHOT TEST
+   * @context This test help to create a snapshot of the structure given to our component.
+   * @context So can be compared and if there's any change alert about it.
+  */
+  test('Footer Snapshot', () => {
+    //@o This way if there's no snapshot created, will create it. And if there's one, will compare it.
+    const footer = create(
+      <Provider store={store}>
+        <BrowserRouter>
+          <Footer />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    expect(footer.toJSON()).toMatchSnapshot();
+    /**
+     * @o If the snapshot fails, but the new structure it's correct.
+     * @o You can update the snapshot with the following sentence.
+     * @test >jest --updateSnapshot
+     */
+  });
+
 });
