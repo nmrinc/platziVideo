@@ -4,7 +4,7 @@
  * If you want create a test for a component, you have to recreate the same structure of the component.
 */
 
-//@a As the component uses React and Redux, your have to recreate the structure so import what's necessary.
+//@a As the component uses React and Redux, you have to recreate the structure so import what's necessary.
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -22,7 +22,7 @@ const store = configureStore();
 //@o If you will make a series of test, you need to create a suite.
 //@a  With the describe command. Pass the description and the tests.
 describe('<Footer />', () => {
-  //@a Create a const with the mounted component wrapped into the redux way
+  //@a Create a const with the mounted component wrapped into the redux pattern
   const footer = mount(
     <Provider store={store}>
       <BrowserRouter>
