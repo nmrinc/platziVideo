@@ -23,7 +23,7 @@ const Signup = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+    //e.nativeEvent.stopImmediatePropagation();
 
     props.registerUser(form, '/login');
   };
