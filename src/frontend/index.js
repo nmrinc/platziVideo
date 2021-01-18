@@ -26,10 +26,12 @@ const render = () => {
    * @context As the app is rendered from the server side,
    * @context this hydrate (pass them to the HTML rendered by ReactDOMServer) all the events needed on the app.
   */
+
+  //@a To validate if user are logged in, get from state it's id. If exist return true/false. And pass it to the app component
   renderMethod(
     <Provider store={store}>
       <Router history={history}>
-        <App />
+        <App isLogged={(store.getState().user.id)} />
       </Router>
     </Provider>,
     document.getElementById('App'),

@@ -7,38 +7,39 @@ import Carousel from '../../components/Carousel';
 import Thumbnail from '../../components/Thumbnail';
 
 import useCreateItems from '../../hooks/useCreateItems';
-import { setFavourite, removeFavourite, searchVideo } from '../../actions';
+import { setUserMovie, deleteUserMovie, searchVideo } from '../../actions';
 
 const Home = (props) => {
 
-  const { data, searchVideo, removeFavourite } = props;
+  const { data, searchVideo, setUserMovie, deleteUserMovie } = props;
 
-  const { findings, mylist, trends, originals } = data;
+  const { findings, myList, trends, originals } = data;
 
   const categories = {
     findings,
-    mylist,
+    myList,
     trends,
     originals,
   };
   const cats = ['Finders Keepers', 'My list', 'Trends', 'Platzi originals'];
 
-  const handleSetFavourite = (used) => {
-    const action = props.setFavourite;
+  const handleSetUserMovie = (used) => {
+    const fIndex = (el) => el._id === used;
+    const copyCat = myList.findIndex(fIndex);
 
-    if (categories['mylist'].length) {
-      if (categories['mylist'].indexOf(used) === -1) action(used);
+    if (myList.length) {
+      if (copyCat === -1) setUserMovie(used);
     } else {
-      action(used);
+      setUserMovie(used);
     }
   };
 
-  const handleRemoveFavourite = (payload) => removeFavourite(payload);
+  const handleDeleteUserMovie = (payload) => deleteUserMovie(payload);
 
   const handleSearch = async (payload) => searchVideo(payload);
 
   const CreateItems = (args) => {
-    return useCreateItems({ props: args.props, Comp: Thumbnail, plus: handleSetFavourite, minus: handleRemoveFavourite, belong: args.belong });
+    return useCreateItems({ props: args.props, Comp: Thumbnail, plus: handleSetUserMovie, minus: handleDeleteUserMovie, belong: args.belong });
   };
 
   return (
@@ -72,14 +73,14 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setFavourite,
-  removeFavourite,
+  setUserMovie,
+  deleteUserMovie,
   searchVideo,
 };
 
 Home.propTypes = {
-  setFavourite: PropTypes.func,
-  removeFavourite: PropTypes.func,
+  setUserMovie: PropTypes.func,
+  deleteUserMovie: PropTypes.func,
   searchVideo: PropTypes.func,
 };
 

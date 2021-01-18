@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const useCreateItems = ({ props, Comp, plus, minus, belong }) => {
 
-  const items = props.map((item) => (belong === 'mylist' ?
+  const items = props.map((item) => (belong === 'myList' ?
     <Comp key={item.id} props={item} useMe={plus} killMe={minus} isList /> :
     <Comp key={item.id} props={item} useMe={plus} killMe={minus} />));
 
