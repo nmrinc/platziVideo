@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Footer /> Footer Snapshot 1`] = `
+<footer
+  className="footer false"
+>
+  <button
+    type="button"
+  >
+    Terms
+  </button>
+  <button
+    type="button"
+  >
+    Privacy
+  </button>
+  <button
+    type="button"
+  >
+    Help Centre
+  </button>
+</footer>
+`;

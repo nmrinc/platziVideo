@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { loginRequest } from '../../actions';
+import { loginUser } from '../../actions';
 import DebouncedInput from '../../components/DebouncedInput';
 
 const Login = (props) => {
@@ -27,8 +27,7 @@ const Login = (props) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
 
-    props.loginRequest(form);
-    props.history.push('/');
+    props.loginUser(form, '/');
   };
 
   return (
@@ -96,11 +95,11 @@ const Login = (props) => {
 };
 
 const mapDispatchToProps = {
-  loginRequest,
+  loginUser,
 };
 
 Login.propTypes = {
-  loginRequest: PropTypes.func,
+  loginUser: PropTypes.func,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

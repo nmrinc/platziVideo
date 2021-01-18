@@ -5,9 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import gravatar from '../../utils/gravatar';
 import logo from '../../assets/img/png/logo-platzi-video-BW2.png';
 
-const Header = ({ user, logOutAction }) => {
-
-  const hasUser = Object.keys(user).length > 0;
+const Header = ({ user, logOutAction, hasUser }) => {
 
   return (
     <header className='header'>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { signupRequest } from '../../actions';
+import { registerUser } from '../../actions';
 import DebouncedInput from '../../components/DebouncedInput';
 
 const Signup = (props) => {
@@ -23,10 +23,9 @@ const Signup = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+    //e.nativeEvent.stopImmediatePropagation();
 
-    props.signupRequest(form);
-    props.history.push('/');
+    props.registerUser(form, '/login');
   };
 
   return (
@@ -89,11 +88,11 @@ const Signup = (props) => {
 };
 
 const mapDispatchToProps = {
-  signupRequest,
+  registerUser,
 };
 
 Signup.propTypes = {
-  signupRequest: PropTypes.func,
+  registerUser: PropTypes.func,
 };
 
 export default connect(null, mapDispatchToProps)(Signup);
