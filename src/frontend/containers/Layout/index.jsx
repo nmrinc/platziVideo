@@ -31,7 +31,7 @@ const Layout = (props) => {
   return (
     data && (
       <>
-        <Header user={data.user} logOutAction={logOutHandle} />
+        <Header user={data.user} logOutAction={logOutHandle} hasUser={Object.keys(data.user).length > 0} />
         {updateChildrenWithProps}
         <Footer />
       </>
