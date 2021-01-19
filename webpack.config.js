@@ -24,9 +24,6 @@ module.exports = {
     path: path.resolve(__dirname, 'src/server/public'),
     filename: isDev ? 'assets/app.js' : 'assets/app-[contenthash].js',
     publicPath: '/',
-    hotUpdateChunkFilename: '.hot / [id].[fullhash].hot - update.js',
-    hotUpdateMainFilename: '.hot / [fullhash].hot - update.json',
-
   },
   resolve: {
     extensions: ['.js', '.jsx'],
@@ -87,13 +84,6 @@ module.exports = {
         },
       },
     ],
-  },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: path.resolve(__dirname, 'dist'),
-    open: true,
-    port: 3000,
-    hot: true,
   },
   plugins: [
     isDev ? new webpack.HotModuleReplacementPlugin() : () => { },
