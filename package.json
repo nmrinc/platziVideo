@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "description": "Video menu project for Platzi's Javascript School",
   "main": "index.js",
+  "engines": {
+    "node": "14.15.x"
+  },
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
