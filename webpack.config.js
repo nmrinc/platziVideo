@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 //@o Shortcut to config dotenv.
 require('dotenv-flow').config();
@@ -93,7 +93,7 @@ module.exports = {
         filename: '[path][base].gz',
       }),
     isDev ? () => { } :
-      new ManifestPlugin(),
+      new WebpackManifestPlugin(),
     new MiniCssExtractPlugin({
       filename: isDev ? 'assets/app.css' : 'assets/app-[contenthash].css',
     }),
