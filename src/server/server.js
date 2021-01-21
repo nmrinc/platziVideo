@@ -91,7 +91,7 @@ if (config.dev) {
       'default-src': ["'self'"],
       'img-src': ["'self'", 'data:', 'http://dummyimage.com', 'https://gravatar.com'],
       'media-src': ['*'],
-      'script-src': ["'self'", "'sha256-y0hdiAk5hDUavtbJaolFkrQtrwipTdWYwNPwdQ9FEAI='"],
+      'script-src': ["'self'", "'sha256-WX3eDqBd2s6CjA5s/T79IX8WEatA+taJWR/9DqdYSjw='"],
       'style-src-elem': ["'self'", 'https://fonts.googleapis.com', "'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E='"],
       'style-src': ["'self'", 'https://fonts.googleapis.com', "'sha256-UTjtaAWWTyzFjRKbltk24jHijlTbP20C1GUYaWPqg7E='"],
       'font-src': ['https://fonts.gstatic.com'],
