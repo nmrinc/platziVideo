@@ -86,6 +86,8 @@ if (config.dev) {
   //@concept Helmet helps you secure your Express apps by setting various HTTP headers.
   app.use(helmet());
 
+  //@issue The sha on script-src was changed to unsafe-inline and unsafe-eval due problems on reload after sign-in
+  //! This is unsafe because it can be subject to code injection attack
   app.use(helmet.contentSecurityPolicy({
     directives: {
       'default-src': ["'self'"],
